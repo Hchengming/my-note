@@ -15,6 +15,8 @@ $ git config -e [--global]
 # 设置提交代码时的用户信息
 $ git config [--global] user.name "[name]"
 $ git config [--global] user.email "[email address]"
+$ git config --global github.user 指令名
+$ git config --global github.token 生成的token号
 
 三、增加/删除文件
 # 添加指定文件到暂存区
