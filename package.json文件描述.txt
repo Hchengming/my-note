@@ -1,0 +1,10 @@
+name - 包名.
+    version - 包的版本号。
+    description - 包的描述。
+    homepage - 包的官网URL。
+    author - 包的作者，它的值是你在https://npmjs.org网站的有效账户名，遵循“账户名<邮件>”的规则，例如：zhangsan <zhangsan@163.com>。
+    contributors - 包的其他贡献者。
+    dependencies / devDependencies - 生产/开发环境依赖包列表。它们将会被安装在 node_module 目录下。
+    repository - 包代码的Repo信息，包括type和URL，type可以是git或svn，URL则是包的Repo地址。
+    main - main 字段指定了程序的主入口文件，require('moduleName') 就会加载这个文件。这个字段的默认值是模块根目录下面的 index.js。
+    keywords - 关键字

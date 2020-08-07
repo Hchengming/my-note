@@ -1,0 +1,14 @@
+1、   isNaN()      函数用于检查其参数是否是非数字值。
+        例：isNaN(123)     //false
+2、  Number()    函数把对象的值转换为数字。
+        例：var test1= new Boolean(true);
+               var test2= new Boolean(false);
+               var test3= new Date();
+               var test4= new String("999");
+               var test5= new String("999 888");
+
+            document.write(Number(test1)+ "<br />");    //1
+            document.write(Number(test2)+ "<br />");    //0
+            document.write(Number(test3)+ "<br />");    //1256657776588
+            document.write(Number(test4)+ "<br />");    //999  
+            document.write(Number(test5)+ "<br />");    //NaN

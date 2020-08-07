@@ -1,0 +1,914 @@
+1.vidio和audio标签的ie8兼容
+   加入js： <script src="http://api.html5media.info/1.1.4/html5media.min.js"></script>  
+
+2.回车键点击事件；
+  $(document).keydown(function(event){
+        if(event.keyCode==13){
+              ajaxs();
+         }
+     });
+
+3.js页面跳转
+<script>window.location.href='http://www.ddhbb.com';</script>
+
+4.前端学习(前端开发仓库)
+http://code.ciaoca.com/
+
+5.页面qq添加好友
+<div class="index_qq" style=" position: fixed;top: 300px;right: 50px;z-index: 9999;">
+    <a href="http://shang.qq.com/email/stop/email_stop.html?qq=2244776061&sig=a1c657365db7e82805ea4b2351081fc3ebcde159f8ae49b1&tttt=1">
+        <img src="__PUBLIC__/images/qq01.png" />
+    </a>
+</div>
+
+
+6.媒体查询最大最小宽两者之间
+@media only screen and (min-width : 992px) and (max-width : 1920px){ body { width:980px; margin:0 auto;} } 
+
+7.jquery鼠标滚动事件
+$(window).scroll(function() {
+  var a= $(document).scrollTop();  ;//ie8鼠标滚动高度获取
+		console.log(111)
+	});
+
+8.点击qq聊天
+<a target="_blank" href="http://wpa.qq.com/msgrd?v=3&uin=113716552&site=qq&menu=yes">
+    <img border="0" src="http://wpa.qq.com/pa?p=2:113716552:53" alt="点击这里给我发消息" title="点击这里给我发消息"/></a>
+</body>
+
+
+9.IE11中input提交出现×号
+  input::-ms-clear{display:none;}
+
+10.元素添加
+            var a='<img  src="__PUBLIC__/images/ion07.png" alt="">';
+            var b='<img  src="__PUBLIC__/images/ion08.png" alt="">';
+            var c='<img  src="__PUBLIC__/images/ion1.png" alt="">';
+            $('.message ul li').eq(1).find('.txt1 span').append(a);
+            $('.message ul li').eq(3).find('.txt1 span').append(b);
+            $('.message ul li').eq(3).find('.txt2 ').append(c);
+
+11.字符加粗替换
+            var chat='<b style="font-size: 0.32rem;color: #9E3E1A">YXZS8188</b>';
+            for(var i=0;i<6;i++){
+                var d=$('.message ul li').eq(i).find('.txt2 span').text();
+                var f=d.replace('YXZS8188',chat);
+                $('.message ul li').eq(i).find('.txt2 span').html(f);
+
+
+            }
+
+12.元素替换
+        $('.footer audio').remove();
+        var b=data[i].src;
+        var c=`<audio controls autoplay><source src=${b} > </audio>` ;
+        $('.footer').append(c)
+
+13.非父子组件通信
+ 假设 bb 组件里面有个按钮，点击按钮，把 123 传递给 aa 组件
+
+// 根组件（this.$root)
+new Vue({
+ el: '#app',
+ router,
+ render: h => h(App),
+ data: {
+  // 空的实例放到根组件下，所有的子组件都能调用
+  Bus: new Vue()
+ }
+})
+bb 组件内调用事件触发↓
+<button @click="submit">提交<button>
+ 
+methods: {
+  submit() {
+   // 事件名字自定义，用不同的名字区别事件
+   this.$root.Bus.$emit('eventName', 123)
+  }
+ }
+aa 组件内调用事件接收↓
+
+// 当前实例创建完成就监听这个事件
+created(){
+ this.$root.Bus.$on('eventName', value => {
+  this.print(value)
+ })
+},
+ 
+methods: {
+ print(value) {
+  console.log(value)
+ }
+},
+ 
+// 在组件销毁时别忘了解除事件绑定
+beforeDestroy() {
+  this.$root.Bus.$off('eventName')
+}
+
+14.vue定时器
+    setTimeout(() => { 
+    self.$refs.mybox.style.color = 'blue'; 
+   },2000) 
+
+
+
+15.audio音乐切换
+       $('#music1')[0].pause();
+        var b=data[i].src;
+        $('#music1').attr('src', b);
+        $('#music1')[0].play();
+
+16.搜索功能（搜索其他类：如：文章，案例）
+        添加： <input type="hidden" name="cid" value="267">
+
+
+17.css3框架animate.css用法
+  $(this).addClass('animated flipOutX')
+  .animated{
+    animation-duration:0.5s;//动画时间
+  }
+
+18.css3属性
+  animation: move 10s linear 0s infinite normal;
+  animation: footer 1s infinite; //css3动画循环播放
+  animation-delay:2s            //css3动画延时
+  transition:all 2s ease 2s;    // all 时间2s ease 延时2s
+  
+  animation: name duration timing-function delay iteration-count direction;
+  animation-name                         规定需要绑定到选择器的 keyframe 名称。。    
+  animation-duration                    规定完成动画所花费的时间，以秒或毫秒计。    
+  animation-timing-function        规定动画的速度曲线。    
+  animation-delay                          规定在动画开始之前的延迟。    
+  animation-iteration-count         规定动画应该播放的次数。（值：n次，infinite无限循环）    
+  animation-direction                   规定是否应该轮流反向播放动画。
+
+19.全屏滚动fullPage
+   fullpage判断切换状态-----切换页面会添加“.active”
+   
+   .fadeIn{opacity:0; position: relative;left: 0;}
+   .active .fadeIn{transition:all 2s ease 2s;opacity: 1;left: 500px;}//切换页	
+
+20.图片垂直居中
+   vertical-align:middle
+
+21.字符间距
+    letter-spacing：3
+
+22.axios安装
+npm install --save axios
+
+23.项目中时间数字--汉字格式转换
+$(function () {
+	var arr1=[1,2,3,4,5,6,7,8,9,10,11,12];
+	var arr2=['一','二','三','四','五','六','七','八','九','十','十一','十二'];
+	for(var i=0;i<5;i++){
+
+		for(var j=0;j<12;j++){
+			if($('.news_mon').eq(i).text()==arr1[j]){
+				$('.news_mon').eq(i).text(arr2[j])
+			}
+		}
+	}
+});		
+
+
+24.webstor支持es6写法不报错
+   粗暴：直接在<script>标签中添加type="text/ecmascript-6"，.vue里面的代码会高亮并支持ES6。
+   
+25.后台广告banner跳转url格式
+   @index.php/List/index/cid/296.html
+
+
+26.input placeholder字体颜色修改
+
+::-webkit-input-placeholder { /* WebKit browsers */
+	color: #6C7EA4;
+}
+:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+	color: #6C7EA4;
+}
+::-moz-placeholder { /* Mozilla Firefox 19+ */
+	color: #6C7EA4;
+}
+:-ms-input-placeholder { /* Internet Explorer 10+ */
+	color: #6C7EA4;
+}
+
+
+
+27.头部标签获取
+  列表页
+    {$title}  获取导航栏（栏目）seo标题，若为空，则获取栏目名称；
+    {$keywords}  获取导航栏（栏目）关键词；
+    {$description}  获取导航栏（栏目）内容；
+  
+   内容页
+     {$title}  获取内容标题；
+     {$keywords}  获取内容Seo关键词；
+     {$description}  获取内容文字摘要；
+
+28.产品排序
+   按onblur序号排序
+   orderby="psort DESC,id ASC"
+   orderby="psort DESC,id DESC"
+    按后台录入序号name排序
+   orderby="asort DESC"
+   orderby="asort ASC"
+			
+29.英文长字符自动换行
+   *{
+    word-break: break-all; word-wrap:break-word
+}			
+
+
+30.字母大写
+var a=$(' p').text().toUpperCase();
+	$(' p').text(a);		
+
+
+31、垂直居中
+display: inline-block;vertical-align: middle;
+
+
+
+32、页面内跳转页面路径判定
+<if condition="$cid == 211 ">
+    <yang:block name='MB_contact' />
+</if>
+
+
+
+33、less应用
+<script src="//cdnjs.cloudflare.com/ajax/libs/less.js/3.0.2/less.min.js" ></script>
+ <link href="css/style.less" rel="stylesheet/less" type="text/css"/>
+
+34.手机端禁止默认长按复制功能
+
+手机
+*{
+  -webkit-touch-callout:none;  /*系统默认菜单被禁用*/
+  -webkit-user-select:none; /*webkit浏览器*/
+  -khtml-user-select:none; /*早期浏览器*/
+  -moz-user-select:none; /*火狐*/
+  -ms-user-select:none;  /*IE10*/
+  user-select:none;
+}
+
+
+input{
+  -webkit-user-select: auto;
+}
+pc
+
+
+<style type="text/css" media="screen">
+        body {
+            -moz-user-select: none;
+            -o-user-select: none;
+            -khtml-user-select: none;
+            -webkit-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+    </style>
+
+35.js加入收藏
+<script>
+  function _addFavorite() {
+      var url = window.location;
+      var title = document.title;
+      var ua = navigator.userAgent.toLowerCase();
+      if (ua.indexOf("360se") > -1) {
+          alert("由于360浏览器功能限制，请按 Ctrl+D 手动收藏！");
+      }
+      else if (ua.indexOf("msie 8") > -1) {
+          window.external.AddToFavoritesBar(url, title); //IE8
+      }
+      else if (document.all) {//IE类浏览器
+        try{
+         window.external.addFavorite(url, title);
+        }catch(e){
+         alert('您的浏览器不支持,请按 Ctrl+D 手动收藏!');
+        }
+      }
+      else if (window.sidebar) {//firfox等浏览器；
+          window.sidebar.addPanel(title, url, "");
+      }
+      else {
+          alert('您的浏览器不支持,请按 Ctrl+D 手动收藏!');
+      }
+  }    
+  </script>
+　　<a href="javascript:void(0)" onclick="_addFavorite()">加入收藏</a>
+
+
+36.css3动画4种过渡方式
+linear	规定以相同速度开始至结束的过渡效果（等于 cubic-bezier(0,0,1,1)）。(匀速)
+ease	规定慢速开始，然后变快，然后慢速结束的过渡效果（cubic-bezier(0.25,0.1,0.25,1)）（相对于匀速，中间快，两头慢）。
+ease-in	规定以慢速开始的过渡效果（等于 cubic-bezier(0.42,0,1,1)）（相对于匀速，开始的时候慢，之后快）。
+ease-out	规定以慢速结束的过渡效果（等于 cubic-bezier(0,0,0.58,1)）（相对于匀速，开始时快，结束时候间慢，）。
+ease-in-out	规定以慢速开始和结束的过渡效果（等于 cubic-bezier(0.42,0,0.58,1)）（相对于匀速，（开始和结束都慢）两头慢）。
+
+
+
+37.CSS3 动画属性
+@keyframes	规定动画。	
+animation	所有动画属性的简写属性，除了 animation-play-state 属性。	
+animation-name	规定 @keyframes 动画的名称。	
+animation-duration	规定动画完成一个周期所花费的秒或毫秒。默认是 0。	
+animation-timing-function	规定动画的速度曲线。默认是 "ease"。	
+animation-delay	规定动画何时开始。默认是 0。	
+animation-iteration-count	规定动画被播放的次数。默认是 1。	
+animation-direction	规定动画是否在下一周期逆向地播放。默认是 "normal"。	
+animation-play-state	规定动画是否正在运行或暂停。默认是 "running"。	
+animation-fill-mode	规定对象动画时间之外的状态。
+
+animation: myfirst 5s linear 2s infinite alternate;
+
+
+38.文字超出部分以省略号形式展现
+a、单行文本
+  .new-item {
+    width: 230px;
+     overflow: hidden;
+    white-space: nowrap;//属性设置如何处理元素内的空白。 nowrap(文本不会换行)
+    text-overflow: ellipsis;;//文本溢出显示省略号
+    display: inline-block;
+  }
+
+b、多行文本
+ .txt{
+      text-overflow:ellipsis;//文本溢出显示省略号
+     display:box;
+     line-clamp: 10; //行数
+     box-orient: vertical; //属性规定框的子元素应该被水平或垂直排列 vertical(垂直排列)
+     overflow: hidden;
+  }
+
+
+39.腾讯地图位置跳转
+https://map.qq.com/?type=marker&isopeninfowin=1&markertype=1&pointx=120.342803&pointy=31.655062&name=无锡市惠山区后姑里&ref=myapp
+
+40.百度地图位置
+http://api.map.baidu.com/marker?location=120.342803,31.655062&title=我的位置&content=无锡市惠山区后姑里&output=html
+
+
+
+
+
+
+40.人民币符号   (Alt+0165)
+
+
+41.css禁止文字被选中
+一：
+   body {
+        -moz-user-select: none;
+        -o-user-select: none;
+        -khtml-user-select: none;
+        -webkit-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+    }
+二：
+
+ <script>
+        window.onload = function() {
+           
+            document.oncontextmenu = function() {
+                return false;
+            };
+            document.onselectstart = function() {
+                return false;
+            };
+        }
+    </script>
+
+
+
+
+
+
+
+
+
+
+42、background-size:
+　cover：图片宽高比不变、铺满整个容器的宽高，而图片多出的部分则会被截掉；
+
+　　contain:图片自身的宽高比不变，缩放至图片自身能完全显示出来，所以容器会有留白区域；
+
+  ie7.8兼容：加入
+   filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='__UPLOAD__{$list.litpic|get_picture=###}',sizingMethod='scale');
+
+
+43、网站禁止右键
+ <script>
+        document.oncontextmenu = function(e) {
+            return false
+        }
+ </script>
+
+44、苹果手机input（submit）按钮兼容
+-webkit-appearance: none; 
+
+
+45.filter(滤镜)
+    filter: grayscale(100%);    灰度（100%）
+
+46、js-页面打开后滚动到特定位置的效果
+　　
+
+滚动页面的方法有scroll、scrollBy和scrollTo，三个方法都带两个参数：x(X轴上的偏移量)和y(Y轴上的偏移量)。因为是要滚动到页面底部，所以参数x为0，y为页面的滚动高度。另外，页面的滚动高度必须在网页加载完成后才能获取到，所以触发事件用onload。?
+方法一：用scroll方法实现。?
+　　<body onload="scroll(0,document.body.scrollHeight) ">?
+　　<script>?
+　　document.write(new Array(100).join("<br>"))?
+　　</script>?
+　　方法二：用scrollBy方法实现。?
+　　<body onload="scrollBy(0,document.body.scrollHeight) ">?
+　　<script>?
+　　document.write(new Array(100).join("<br>"))?
+　　</script>?
+　　方法三：用scrollTo方法实现。?
+　　<body onload="scrollTo(0,document.body.scrollHeight)">?
+　　<script>?
+　　document.write(new Array(100).join("<br>"))?
+　　</script>
+
+
+47./*fix under IE8*/伪类
+
+   IE9以上，谷歌          IE8,fix
+li:nth-child(3)(相当于)li:first-child+li+li
+li:nth-child(4)(相当于)li:first-child+li+li+li
+
+
+48.css3图片从中间放大显现
+.meng2{
+                 position: absolute;top: 0;left: 0;
+               
+                z-index: 3;
+                transition:all 0.3s linear 0s;
+                transform: scale(0, 0);
+  }
+
+.meng2{
+            z-index: 9;
+            transform:scale(1,1);
+            
+          }
+
+49.a标签跳转失效
+javascript:void(0)
+
+50.表格边框修改
+table {
+    display: block;
+    margin: 0 auto;
+    border-collapse: collapse;
+}
+
+table td {
+    border: 1px solid black;
+}
+
+
+51.vscode css3前缀添加
+  ctrl+shift+c
+
+52、屏幕大小变化时触发事件
+$(window).resize(function(){
+
+   //process here
+
+});
+
+window的onresize事件
+
+
+53、addEventListener() 方法  事件监听 =====》removeEventListener()删除方法
+addEventListener()相比于on()可以对同个元素添加多个相同事件
+element.addEventListener(event, function, useCapture)
+useCapture	可选。布尔值，指定事件是否在捕获或冒泡阶段执行
+例：您可以在文档中添加许多事件，添加的事件不会覆盖已存在的事件。
+
+该实例演示了如何在<button>元素中添加两个点击事件：
+
+document.getElementById("myBtn").addEventListener("click", myFunction,flase);
+document.getElementById("myBtn").addEventListener("click", someOtherFunction,false);
+
+54、移动端禁用及恢复触摸页面滚动
+
+Chrome 51、Firefox 49及以上
+//阻止默认行为函数
+function preventDefault(e) {
+    e.preventDefault();
+}
+
+// 禁用触摸滚动页面
+document.addEventListener('touchmove', preventDefault, {passive: false});
+
+// 恢复触摸滚动页面
+document.removeEventListener('touchmove', preventDefault, {passive: false});
+
+Chrome 51、 Firefox 49以下
+//阻止默认行为函数
+function preventDefault(e) {
+    e.preventDefault();
+}
+
+// 禁用触摸滚动页面
+document.addEventListener('touchmove', preventDefault, false);
+
+// 恢复触摸滚动页面
+document.removeEventListener('touchmove', preventDefault, false);
+
+55、php添加有序类名数字
+
+ <?php $n=1; ?>
+      class=" nav<?php echo $n ?>"
+ <?php $n+=1; ?>
+
+
+例：
+ <?php $n=1; ?>
+                        <yang:catlist typeid='0'>
+                            <li class=" nav<?php echo $n ?>"><a class="<if condition = " $sortinfo[ 'id'] eq $catlist[ 'id'] ">hover</if>" href="{$catlist.url}"><span>{$catlist.name}</span> <span class="bg"></span></a>
+                            </li>
+                            <?php $n+=1; ?>
+
+
+
+56.阿里图库使用
+   1、将选择图标放入购物车；
+   2、创建项目；
+   3、将所有图标放入项目；
+   4、打开项目，下载到本地；
+   5、找到iconfont.css，复制到我的项目中；
+   6.使用：如   <i class="iconfont icon-kuaijin1"></i>
+
+57.vscodecss3兼容写法自动完成
+   a、安装 Autoprefixer
+   b、快捷键 ctrl+shift+c
+
+
+58、css3动画速度曲线 animation-timing-function: value;
+linear 动画从头到尾的速度是相同的。 
+ease 默认。动画以低速开始，然后加快，在结束前变慢。 
+ease-in 动画以低速开始。 
+ease-out 动画以低速结束。 
+ease-in-out 动画以低速开始和结束。
+
+ linear: cubic-bezier(0.0, 0.0, 1.0, 1.0)
+ ease: cubic-bezier(0.25, 0.1, 0.25, 1.0)
+ ease-in: cubic-bezier(0.42, 0, 1.0, 1.0)
+ ease-out: cubic-bezier(0, 0, 0.58, 1.0)
+ ease-in-out: cubic-bezier(0.42, 0, 0.58, 1.0)
+
+cubic-bezier(n,n,n,n) 在 cubic-bezier 函数中自己的值。可能的值是从 0 到 1 的数值 
+
+
+59、判断客户端为手机端还是移动端
+   function IsPC() {
+            var userAgentInfo = navigator.userAgent;
+            var Agents = ["Android", "iPhone", "SymbianOS", "Windows Phone", "iPad", "iPod"];
+            var flag = true;
+            for (var v = 0; v < Agents.length; v++) {
+                if (userAgentInfo.indexOf(Agents[v]) > 0) {
+                    //成立则为移动端
+                    flag = false;
+                    break;
+                }
+            }
+            return flag;
+        }
+        console.log(IsPC()) //true|pc   false|移动
+
+
+60.async 异步加载
+例： <script src="./index.js" async></script>
+
+
+
+61、双排放置元素模板
+  <yang:list typeid="232" flag="1" limit="24" orderby="csort DESC,id ASC">
+                                <if condition="is_odd($autoindex+1)">
+                                    <ul>
+                                        <li>
+
+                                            <img src="__UPLOAD__{$list.litpic|get_picture=###}" />
+                                            <div class="pic"><a>{$list.title}</a></div>
+                                        </li>
+                                        <else />
+                                        <li>
+                                            <img src="__UPLOAD__{$list.litpic|get_picture=###}" />
+                                            <div class="pic"><a>
+                                                      
+                                                      {$list.title}</a></div>
+                                        </li>
+                                    </ul>
+                                </if>
+                            </yang:list>
+
+62、css3字体突破最小限制
+h2{
+   
+   transform-origin: 0% 0%;
+   transform: scale(0.7)
+}
+
+
+63、es6数组去重
+  var a=[1,2,3,2]
+   console.log([...new Set[a]) ===> //{1,2,3}
+  es5去重
+  function uniq(array){
+    var temp = []; //一个新的临时数组
+    for(var i = 0; i < array.length; i++){
+        if(temp.indexOf(array[i]) == -1){
+            temp.push(array[i]);
+        }
+    }
+    return temp;
+   }
+
+64、flex水平、垂直对齐
+  ul{
+   justify-content:center;
+   align-items: center;
+  }
+
+65、字符串全局替换
+    txt.replace(/；/g, ';<br/>')   将所有；替换成;<br/>
+
+66、cmd创建全局安装和缓存路径
+  在cmd窗口下执行以下命令
+      npm config set  prefix "node_global文件夹地址"//全局安装路径
+      npm config set cache "node_cache文件夹地址"  //全局缓存路径
+
+67、width:100vh  相当于宽100%；
+       height:100vh  相当于高100%（当元素内容不够时会自动撑开）
+      例：height: calc(100vh - 265px)  自适应高度
+      less中   height: ~"calc(100% - 265px)";
+    
+68.文字按原型输出对齐    white-space: pre !important;
+      例：<p>哈哈哈哈</p> 
+             <p>哈      哈</p>
+
+69.连续的数字和英文字符强制换行  
+     css   word-break:break-all;    ie/Firefox
+             word-wrap : break-word   ie
+
+70.toFixed(num)  保留num位小数
+例：（1.00005).toFixed(2)   //1.00
+
+71、判断元素是否加载完成
+     我们使用document的readyState属性：document.readyState
+     readyState 属性返回当前文档的状态。
+
+　　该属性返回以下值:
+      uninitialized - 还未开始载入
+      loading - 载入中
+      interactive - 已加载，文档与用户可以开始交互
+      complete - 载入完成  (loaded)
+72、js获取元素方法 
+             document.querySelector()获取一个
+　　　　document.querySelectorAll()获取多个
+var chils= s.childNodes;  //得到s的全部子节点
+var par=s.parentNode;   //得到s的父节点
+var ns=s.nextSbiling;   //获得s的下一个兄弟节点
+var ps=s.previousSbiling;  //得到s的上一个兄弟节点
+var fc=s.firstChild;   //获得s的第一个子节点
+var lc=s.lastChile;   //获得s的最后一个子节点
+
+73、js对象深度克隆
+//深复制对象方法    
+var cloneObj = function (obj) {  
+    var newObj = {};  
+    if (obj instanceof Array) {  
+        newObj = [];  
+    }  
+    for (var key in obj) {  
+        var val = obj[key];  
+        //newObj[key] = typeof val === 'object' ? arguments.callee(val) : val; //arguments.callee 在哪一个函数中运行，它就代表哪个函数, 一般用在匿名函数中。  
+        newObj[key] = typeof val === 'object' ? cloneObj(val): val;  
+    }  
+    return newObj;  
+};  
+//测试    
+var obj = {a:function(){console.log(this.b.c)},b:{c:1}},//设置一个对象  
+newObj = cloneObj(obj);//复制对象  
+newObj.b.c=2;//给新对象赋新值  
+obj.a();//1，不受影响  
+newObj.a();//2  
+
+
+74、浏览器记住密码-input样式覆盖解决方式
+
+input:-webkit-autofill {
+  -webkit-text-fill-color: #fff !important;
+  transition: background-color 50000s ease-in-out 0s;
+ }
+
+75、对象遍历
+ Object.keys(this.fromModelAlls.menuForm).forEach(item=>{
+        if(item.search('Id')>2){
+          this.fromModelAlls.menuForm[item]=""
+        }
+ })
+
+76、js获取字符串的字节长度
+
+//获得输入框中字符长度
+    function getLength(val) {  
+        var str = new String(val);  
+        var bytesCount = 0;  
+        for (var i = 0 ,n = str.length; i < n; i++) {  
+            var c = str.charCodeAt(i);  
+            if ((c >= 0x0001 && c <= 0x007e) || (0xff60<=c && c<=0xff9f)) {  //其他字符
+                bytesCount += 1;  
+            } else {  //汉字字符
+                bytesCount += 2;  
+            }  
+        }  
+        return bytesCount;  
+    }
+
+77、js获取几年、几月、几天、几周前时间
+     //获取系统当前时间
+        var nowdate = new Date();
+        var y = nowdate.getFullYear();
+        var m = nowdate.getMonth()+1;
+        var d = nowdate.getDate();
+        var formatnowdate = y+'-'+m+'-'+d;
+        $("#enddate").datebox("setValue",formatnowdate);
+        //获取系统前一周的时间
+        var oneweekdate = new Date(nowdate-7*24*3600*1000);
+        var y = oneweekdate.getFullYear();
+        var m = oneweekdate.getMonth()+1;
+        var d = oneweekdate.getDate();
+        var formatwdate = y+'-'+m+'-'+d;
+        $("#fdate").datebox("setValue",formatwdate);
+        //获取系统前一个月的时间
+        nowdate.setMonth(nowdate.getMonth()-1);
+        var y = nowdate.getFullYear();
+        var m = nowdate.getMonth()+1;
+        var d = nowdate.getDate();
+        var formatwdate = y+'-'+m+'-'+d;
+        $("#fdate").datebox("setValue",formatwdate)
+        //获取一年前时间
+        startTime = new Date();
+        startTime.setFullYear(nowdate.getFullYear() - 1);
+        var y = startTime .getFullYear();
+        var m = startTime .getMonth()+1;
+        var d = startTime .getDate();
+        var formatwdate = y+'-'+m+'-'+d;
+        $("#fdate").datebox("setValue",formatwdate
+
+78、计算机查找子文件夹
+   1、创建新文本文档  输入内容   DIR /S/B >FILESLIST111.TXT
+   2、将该文档改名为     R.BAT
+   3、双击运行该文件    ==》会生产  FILESLIST111.txt文本文档
+
+79.git上导入项目并网上打开步骤
+ 1、打开https://github.com并登陆；
+ 2、创建一个新的存储库--存储库名必须以github.io结尾   例：Hchengming.github.io；
+ 3、获取SSH链接并在本地cmd克隆初始项目  例：https://github.com/Hchengming/Hchengming.github.io.git;
+ 4、通过编辑器传入项目文件并推送至git上（第一次推送需输入git账号、密码）；
+ 5、git刷新并获取网址  例：https://hchengming.github.io/
+
+80.html约定头部
+ pc端：
+<meta charset="utf-8">
+<meta name="keywords" content="your keywords">
+<meta name="description" content="your description">
+<meta name="author" content="author,email address">
+<meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+手机：
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<meta name="format-detection" content="telephone=no">
+
+81、CSS3 特殊字体写入
+      例： @font-face {
+            font-family: myFirstFont;
+            src: url('Sansation_Light.ttf'), url('Sansation_Light.eot');
+            /* IE9 */
+        }
+
+        div {
+            font-family: myFirstFont;
+        }
+
+
+82、[HTML5] FileReader对象--文件读取对象    详情：https://www.cnblogs.com/hhhyaaon/p/5929492.html
+       FileReader主要用于将文件内容读入内存，通过一系列异步接口，可以在主线程中访问本地文件。
+    var reader = new FileReader();
+        .readAsArrayBuffer(file):void	异步按字节读取文件内容，结果用ArrayBuffer对象表示
+        .readAsBinaryString(file):void	异步按字节读取文件内容，结果为文件的二进制串
+        .readAsDataURL(file):void	   异步读取文件内容，结果用data:url的字符串形式表示
+        .readAsText(file,encoding):void	异步按字符读取文件内容，结果用字符串形式表示
+      案例：
+var input  = document.getElementById("file"); //input file
+input.onchange = function(){
+    var file = this.files[0];
+    if(!!file){
+        //读取本地文件，以gbk编码方式输出
+        var reader = new FileReader();
+        reader.readAsText(file,"UTF-8");
+        reader.onload = function(){
+            //读取完毕后输出结果
+            console.log(this.result);
+        }
+    }
+}
+
+83、js去除字符串空格(空白符)
+       去除字符串内所有的空格：str = str.replace(/\s*/g,"");
+　　去除字符串内两头的空格：str = str.replace(/^\s*|\s*$/g,"");
+　　去除字符串内左侧的空格：str = str.replace(/^\s*/,"");
+　　去除字符串内右侧的空格：str = str.replace(/(\s*$)/g,"")
+
+84、JSON.stringify(value, replacer, space)    JSON数据格式化输出
+value   要转换为JSON字符串的值。
+replacer 可选的   其改变的字符串化过程的行为的函数，或阵列String和Number被包括在JSON字符串充当用于选择/过滤值对象的属性的白名单的对象。如果null提供或未提供此值，则对象的所有属性都包含在生成的JSON字符串中。
+space 可选的   一个String或者Number这是我们用来插入空白到输出JSON字符串为了提高可读性对象。
+如果是a Number，则表示用作空格的空格字符数; 这个数字的上限为10（如果它更大，那么值就是这个数字10）。小于1的值表示不应使用空格。
+如果是a String，则将字符串（或字符串的前10个字符，如果长于该字符串）用作空格。如果未提供此参数（或为null），则不使用空格。
+
+ 例：let str = JSON.stringify(data,null,"\t")     ==》JSON数据格式化输出
+
+85、文件夹上传
+<form method="POST" enctype=multipart/form-data>
+  <input type='file' name="file" webkitdirectory >
+  <button>upload</button>
+</form> 
+
+86、js取对象中的键与值
+const data = {
+  one: 'first',
+  two: 'second',
+  three: 'third'
+}
+ 
+for (var i in data) {
+  console.log('键：' + i)
+  console.log('值：' + data[i])
+}
+
+87、html文件内容读取写入  $.get(url,function(a){$(div).html($(a).find('body'))})
+ $.get("../../../../static/font/demo_index.html", function (a) {
+        //  $(div).html($(a).find('body')) 
+        console.log($(a).find('.font-class .icon_lists'))
+})
+
+88、vue项目局域网远程访问
+   package.json文件中   scripts=》dev添加 --host 0.0.0.0 
+   例："dev": "webpack-dev-server --inline --progress --config build/webpack.dev.conf.js --open --host 0.0.0.0 ",
+
+89、table设置固定td 宽度
+  <title>防止table变形 td固定宽度</title>
+  <style type="text/css">
+     table {
+                 /*为表格设置合并边框模型*/
+                 border-collapse: collapse;
+                /*列宽由表格宽度和列宽度设定*/
+                 table-layout: fixed;
+             }
+             
+             td {
+                 border: 1px solid #ddd;
+                 /*允许在单词内换行。*/
+                 word-break: break-word;
+                 /*设置宽度*/
+                width: 100px;
+            }
+         </style>
+
+
+90、构造函数
+function person(name,age){
+            this.name = name;
+            this.age = age;
+            this.family = ["爸爸","妈妈","哥哥"];
+            this.sayName = function(){
+                console.log(this.name);
+            };
+            this.myFamily = function(){
+                var size = this.family.length;
+                var str = "家庭成员：";
+                for(var i = 0;i < size;i++){
+                    str += this.family[i]+",";
+                }
+                console.log(str);
+            };
+        }
+        var p = new person("张三",22);
+        p.sayName();//张三
+        p.family.push("弟弟");
+        p.myFamily();//家庭成员：爸爸，妈妈，哥哥，弟弟
+        var p1 = new person("李四",22);
+        p1.sayName();//李四
+        p1.myFamily();//家庭成员：爸爸，妈妈，哥哥

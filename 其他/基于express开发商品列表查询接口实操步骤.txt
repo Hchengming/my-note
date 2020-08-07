@@ -1,0 +1,91 @@
+ 实际操作：1、npm i  mongoose --save   安装mongoose  
+
+             2、创建models文件夹 创建商品模型js  models/goods.js
+
+             3、配置models/goods.js
+models/goods.js
+
+// Mongoose是在node.js异步环境下对mongodb进行便捷操作的对象模型工具 
+const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
+
+var productSchema = new Schema({ //创建新模型
+    "productId": { type: String },
+    "productName": String,
+    "salePrice": Number,
+    "productImage": String
+        // "productUrl": String
+});
+
+//                             集合名  输出自动加s 即goods
+module.exports = mongoose.model('good', productSchema)
+
+
+4、创建二级路由  routes/goods.js
+
+5、配置一级路由  app.js 
+   添加   var goods=require('./routes/goods')     app.use('/goods', goods);
+
+6、配置   routes/goods.js
+ const express = require('express');
+const router = express.Router();
+const mongoose = require('mongoose');
+const Goods = require('../models/goods');
+
+// 链接数据库
+var urls = "mongodb://127.0.0.1:27017/dumall"
+mongoose.connect(urls);
+
+// 判断数据库是否链接成功
+mongoose.connection.on('connected', function() {
+    console.log('MongoDB 数据库链接成功')
+})
+mongoose.connection.on('error', function() {
+    console.log('MongoDB 数据库链接失败')
+})
+mongoose.connection.on('disconnected', function() {
+    console.log('MongoDB 数据库链接已断开')
+})
+
+router.get('/', (req, res, next) => {
+    //    res.send('hellow goodslist')
+    Goods.find({}, (err, doc) => {
+        if (err) {
+            res.json({ //输出json格式数据
+                status: "1",
+                msg: err.message
+            })
+        } else {
+            res.json({
+                status: '0',
+                msg: '',
+                result: {
+                    count: doc.length,
+                    list: doc
+                }
+            })
+        }
+    })
+})
+
+
+module.exports = router;
+
+
+
+
+vue中数据调用
+  VUE解决通过proxyTable:
+
+   在 config/index.js 配置文件中  dev-->
+   例： proxyTable: {
+            '/goods': {
+                target: 'http://localhost:3000'
+            }
+        }
+
+   vue模块中调用：
+   相当于直接解决跨域后调用=》http://localhost:3000/goods
+   axios.get('/goods').then(result=>{
+                
+    })

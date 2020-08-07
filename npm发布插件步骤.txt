@@ -1,0 +1,4 @@
+1、npm init 初始化目录；
+2、编写发布信息，放入发布文件；
+3、npm addUser 添加自己的用户信息(已注册直接 npm login 登录)；
+4、npm publish 发布

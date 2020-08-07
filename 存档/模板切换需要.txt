@@ -1,0 +1,6 @@
+1、common.js文件替换
+2、main.vue文件内容修改
+3、vuex=index.js文件代码清理
+4、axios.js==>文件修改 参数store改成v
+5、baowei.js文件替换
+6、main.js   router.beforeEach  页面缓存--标签页

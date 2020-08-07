@@ -1,0 +1,21 @@
+
+1、cmd创建全局安装和缓存路径
+  在cmd窗口下执行以下命令
+      npm config set  prefix "node_global文件夹地址"//全局安装路径
+      npm config set cache "node_cache文件夹地址"  //全局缓存路径
+
+2、计算机查找子文件夹
+   1、创建新文本文档  输入内容   DIR /S/B >FILESLIST111.TXT
+   2、将该文档改名为     R.BAT
+   3、双击运行该文件    ==》会生产  FILESLIST111.txt文本文档
+
+3.git上导入项目并网上打开步骤
+ 1、打开https://github.com并登陆；
+ 2、创建一个新的存储库--存储库名必须以github.io结尾   例：Hchengming.github.io；
+ 3、获取SSH链接并在本地cmd克隆初始项目  例：https://github.com/Hchengming/Hchengming.github.io.git;
+ 4、通过编辑器传入项目文件并推送至git上（第一次推送需输入git账号、密码）；
+ 5、git刷新并获取网址  例：https://hchengming.github.io/
+
+4、vue项目局域网远程访问
+   package.json文件中   scripts=》dev添加 --host 0.0.0.0 
+   例："dev": "webpack-dev-server --inline --progress --config build/webpack.dev.conf.js --open --host 0.0.0.0 ",

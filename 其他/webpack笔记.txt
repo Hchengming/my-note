@@ -1,0 +1,19 @@
+1、webpack3安装过程
+   01--npm install -g webpack@3.10.0   全局安装webpack
+   02--npm init   创建项目文件，初始化项目文件目录
+   03--npm install --save-dev webpack@3.10.0 --save-dev  局部安装
+   04--webpack -v  查看webpack版本
+
+2、配置文件webpack.config.js--整体布局
+   module.exports={
+    //入口文件的配置项
+    entry:{},
+    //出口文件的配置项
+    output:{},
+    //模块：例如解读CSS,图片如何转换，压缩
+    module:{},
+    //插件，用于生产模版和各项功能
+    plugins:[],
+    //配置webpack开发服务功能
+    devServer:{}
+    }

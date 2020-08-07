@@ -1,0 +1,271 @@
+1、apply()与call()的区别
+     B.apply(A, arguments);即A对象应用B对象的方法。
+     B.call(A, args1,args2);即A对象调用B对象的方法。
+
+  例：apply()
+  function add(a,b){
+  return a+b;  
+}
+function sub(a,b){
+  return a-b;  
+}
+var a1 = add.apply(sub,[4,2]);　　//sub调用add的方法     alert(a1);  //6  
+var a2 = sub.apply(add,[4,2]);      //add调用sub的方法     alert(a2);  //2
+
+/*call的用法*/
+var a1 = add.call(sub,4,2);   //sub调用add的方法     alert(a1);  //6  
+
+2、sessionStorage缓存
+   　sessionStorage 是HTML5新增的一个会话存储对象，用于临时保存同一窗口(或标签页)的数据，在关闭窗口或标签页之后将会删除这些数据。
+      。储存：sessionStorage.setItem('testKey','这是一个测试的value值'); // 存入一个值
+                   sessionStorage['testKey'] = '这是一个测试的value值';
+     。读取数据：sessionStorage.getItem('testKey'); // => 返回testKey对应的值
+                        sessionStorage['testKey']; // => 这是一个测试的value值
+     。存储Json对象
+        例：var userEntity = {
+                  name: 'tom',
+                  age: 22
+               };
+ 
+        // 存储值：将对象转换为Json字符串
+         sessionStorage.setItem('user', JSON.stringify(userEntity));
+ 
+     // 取值时：把获取到的Json字符串转换回对象
+     var userJsonStr = sessionStorage.getItem('user');
+    userEntity = JSON.parse(userJsonStr);
+    console.log(userEntity.name); // => tom
+3、watch监听props内的对象值变化
+     props:{menuForm:Object}
+    watch:{
+    menuForm:{
+     	handler(val){
+			  if(val.menuFlag=='1'){
+           this.menuForm.menuType='',
+           this.menuForm.url=''
+        }
+			},
+			deep:true
+   }
+}
+    
+4、css字符长度控制
+   .ivu-tag-text {
+                display: inline-block;
+                vertical-align: middle;
+                width: 50px;
+                overflow: hidden; //隐藏
+                white-space: nowrap; //文本不进行换行
+                word-break: keep-all; //中英文不断词
+                word-wrap: normal; //保持默认处理
+                text-overflow: ellipsis; //显示省略符号来代表被修剪的文本
+                -o-text-overflow: ellipsis;
+            }
+
+
+5、vue获取当前元素的宽度     this.$refs[name].offsetWidth    this.$refs[name].offsetHeight
+6、vue元素鼠标滚动事件   @DOMMouseScroll="handlescroll"    @mousewheel="handlescroll"     火狐/其他浏览器
+     例： handlescroll (e) {
+          var type = e.type
+         let delta = 0
+      if (type === 'DOMMouseScroll' || type === 'mousewheel') {
+        delta = (e.wheelDelta) ? e.wheelDelta : -(e.detail || 0) * 40
+      }
+     //使每次鼠标滚动距离--120px
+      this.handleScroll(delta)
+        
+    },
+
+7、元素的鼠标事件以及clientX、offsetX、screenX、pageX、x的区别（e）=>{}
+       一、clientX、clientY
+             点击位置距离当前body可视区域的x，y坐标
+       二、pageX、pageY
+             对于整个页面来说，包括了被卷去的body部分的长度
+       三、screenX、screenY或x、y
+             点击位置距离当前电脑屏幕的x，y坐标
+       四、offsetX、offsetY
+             相对于带有定位的父盒子的x，y坐标
+
+8.iView动态生成Menu时open-names不生效的解决办法
+                this.$nextTick(() => {
+                  this.$refs.side_menu.updateOpened();
+                  this.$refs.side_menu.updateActiveName();
+                });
+
+9、vue 添加快捷路径指向   build/webpack.base.conf.js
+       resolve: {
+    extensions: ['.js', '.vue', '.json'],
+    alias: {
+      'vue$': 'vue/dist/vue.esm.js',
+      '@': resolve('src')   //快捷指向src
+    }
+  },
+
+
+10、父组件触发子组件事件
+    父：get(){
+            this.$refs.child.treeShow('menuName','组织机构树',datas)  
+          }
+  子： <queryModel ref="child"></queryModel>
+        methods:{
+          treeShow(key,title,datas){
+                  
+          } 
+         }
+11、vue打印插件
+      。安装  npm install vue-print-nb --save
+      。import Print from 'vue-print-nb'
+　　   Vue.use(Print); //注册
+      。<div id="printTest" >
+　　　　　<p>锄禾日当午</p>
+　　　</div>
+　　　<button v-print="'#printTest'">打印</button>
+
+12、vue  mixins 混入
+   例：var mixin = {
+  data: function () {
+    return {
+      message: 'hello',
+      foo: 'abc'
+    }
+  }
+}
+
+new Vue({
+  mixins: [mixin],
+  data: function () {
+    return {
+      message: 'goodbye',
+      bar: 'def'
+    }
+  },
+  created: function () {
+    console.log(this.$data)
+    // => { message: "goodbye", foo: "abc", bar: "def" }
+  }
+})
+
+12、vue插件封装
+  MyPlugin.install = function (Vue, options) {
+  // 1. 添加全局方法或属性
+  Vue.myGlobalMethod = function () {
+    // 逻辑...
+  }
+
+  // 2. 添加全局资源
+  Vue.directive('my-directive', {
+    bind (el, binding, vnode, oldVnode) {
+      // 逻辑...
+    }
+    ...
+  })
+
+  // 3. 注入组件
+  Vue.mixin({
+    created: function () {
+      // 逻辑...
+    }
+    ...
+  })
+
+  // 4. 添加实例方法
+  Vue.prototype.$myMethod = function (methodOptions) {
+    // 逻辑...
+  }
+}
+
+13、beforeRouteEnter()、beforeRouteLeave（）
+beforeRouteEnter：进入路由之前执行的函数。
+beforeRouteLeave：离开路由之前执行的函数。
+
+beforeRouteEnter(to, from, next){
+进入路由之前要执行的代码操作
+next();
+}
+beforeRouteLeave：(to, from, next){
+离开路由之前要执行的代码操作
+next();
+}
+
+14、空对象判断
+JSON.stringify(obj)=="{}"  //true or false
+
+15、v-charts图片打印
+  //将第一个画布作为基准。
+    var baseCanvas = $("#v_charts").find("canvas").first()[0];
+    // if(!baseCanvas){
+    //     return false;
+    // };
+    // var width = baseCanvas.width;
+    // var height = baseCanvas.height;
+    // var ctx = baseCanvas.getContext("2d");
+    // //遍历，将后续的画布添加到在第一个上
+    // $("#v_charts").find("canvas").each(function(i,canvasObj){
+    //     if(i>0){
+    //         var canvasTmp = $(canvasObj)[0];
+    //         ctx.drawImage(canvasTmp,0,0,width,height);
+    //     }
+    // });
+    //获取base64位的url
+    //  console.log(baseCanvas.toDataURL())
+     this.src=baseCanvas.toDataURL()
+    // return baseCanvas.toDataURL();
+     this.$nextTick(()=>{
+        this.$print(this.$refs['v_charts'])
+      })
+
+16、Vue.set(object, key, value)   给对象添加新的属性
+ 例：let data={
+          a:'1',
+          b:"2"
+      }
+     this.$set(data,"a","3")
+     console.log(data)   //{  a:'3', b:"2"}
+
+
+17、JS 判断两个数组是否相同
+例： JSON.stringify([1,2,3].sort()) === JSON.stringify([3,2,1].sort()); //true
+        [1,2,3].sort().toString() === [3,2,1].sort().toString(); //true  
+
+18、禁止浏览器input记住密码
+方法一
+a、顶部添加两个input框
+  <input type="text"  class="model_tops"> 
+  <input type="password" class="model_tops"> 
+b、密码框添加属性  autocomplete='new-password'
+方法二
+  $(function() {
+      $("input[type='password']").attr("readonly", "readonly");
+      $("input[type='password']").click(function() {
+        //当某个被input框点击的时候,就删掉被点击的这个input框的只读属性readonly
+        $(this).removeAttr("readonly");
+      });
+    });
+
+
+19、vendor.js、app.js打包后文件太大问题解决
+以提取 vue.js 为例：
+a、下载 vue.min.js 放在 /static/ 目录下，并在 index.html 中引入 （或引入cdn路径也行）
+b、package.json 中配置的 vue 就不需要了，删掉
+c、/build/webpack.base.conf.js 文件中添加 vue 的映射
+module.exports = {
+  externals: {
+    // '包名': '全局变量名'
+    'vue': 'Vue'
+  }
+}
+  
+20、vue-cli优化打包
+①在项目 根目录config/index.js  中  build 内找到  productionGzip: false， 把 false改为true。与 productionSourceMap 刚好相反。
+②安装插件 compression-webpack-plugin　　注:安装的时候带上版本号，现在 compression-webpack-plugin 2.0已出，默认该命令安装最新版，最新版本和当前的webpack不匹配，要报错。 
+cnpm install --save-dev compression-webpack-plugin@1.1.12            //1.1最新版
+③compression-webpack-plugin安装完成后，npm run build 执行后会发现js文件夹内每个js文件都有一个相对应的gz后缀文件，而且gz文件比相对应的js文件小很多。浏览器如果支持 g-zip 会自动查找有没有gz文件，找到了就直接加载gz文件然后本地解压并执行。
+
+21、数组和对象区分
+let arr=[1,2,3,4]
+let obj={asd:'123'}
+arr.constructor==Array   //true
+obj.constructor==Object   //true
+
+22、node 服务一直启动
+a.安装forever  sudo npm install -g forever
+b.使用forever开启nodejs程序   forever start xxx.js

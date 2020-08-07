@@ -1,0 +1,159 @@
+1、搭建基于express的框架运行环境
+   。安装express generator生产器
+   。通过生产器创建项目
+   。配置分析
+    01.npm i -g express
+    02.npm i -g express-generator
+    03.找到express,express.cmd文件位置，配置相当位置的环境变量，重启   C:\Users\hcm\AppData\Roaming\npm
+    04.express 项目名   -----构建api   
+
+2、express项目api的html文件样式展示配置
+   01.npm i ejs --save
+   02.app.js文件中添加   var ejs=require('ejs')  app.engine('.html',ejs.__express);
+      将app.set('view engine', 'jade');修改为app.set('view engine', 'html')
+   03.view文件夹中  添加 index.html文件
+
+3、mongodDB数据库优点
+   。高可扩展性
+   。分布式储存
+   。低成本
+   。结构灵活
+
+
+4、mongodb创建账号、用户名
+   。mongo
+   。use 数据库
+   。db.createUser({user:"admin",pwd:"admin","roles":["root"]})   ----用户、密码、指定角色
+   。db.auth("admin","admin")  -----账号认证，返回1认证成功
+
+5、mongo数据导入导出
+   数据导入
+   01、找到mongodb安装目录，从命令行进入mongodb安装目录下的bin目录 
+   02、 mongoimport -d 数据库名字  -c 集合名字 --file 导入文件地址
+     例：mongoimport -d hcm -c table3  --file c:\Users\Administrator\......
+
+   数据导出
+   03、mongoexport -h 数据库所在主机地址（若是本地则为127.0.0.1，若是远程则写为远程地址IP）-d 数据库名称 -c 集合名称 -o 输出多的json文件路径
+       即：mongoexport -h 主机地址 -d 数据库名称 -c 集合名称 --csv --field 字段列表 -o 输出地址
+       例：mongoexport -h 127.0.0.1 -d test_new -c mycolle -o D:\Database\temp\mycolle.json
+
+6、 PM2是node进程管理工具
+    1、安装：cnpm install -g pm2
+    2、启动进程  pm2 start bin/www      ----案例是启动express  api
+    3、停止所有进程  pm2  stop all      -----例：pm2  stop bin/www  只停止一个
+ 
+7、基于express开发商品列表查询接口
+   。安装mongoose   
+   。创建model      创建models文件夹
+   。创建路由
+   。基于mongoose，实现商品列表查询功能
+
+8.express未登录拦截
+
+// 登录前拦截
+app.use((req, res, next) => {
+    // 判断是否登录
+    if (req.cookies.userId) {
+        next()
+    } else {
+        // req.originalUrl 获取当前接口地址
+        // 设置接口白名单
+        //req.path只能获取原路径，获取不到后接参数
+        if (req.originalUrl == "/users/login" || req.originalUrl == "/users/logout" || req.originalUrl.indexOf("/goods/list") > -1) {
+            next()
+        } else {
+            res.json({
+                status: '10001',
+                msg: '当前未登录',
+                result: ''
+            })
+        }
+    }
+})
+  
+/*必须放置在路由文件引入之前*/             
+app.use('/', indexRouter);
+app.use('/users', usersRouter);
+app.use('/goods', goods);
+
+
+9.express登录检校（即:刷新后保存登录信息）
+// 校验
+router.get('/checkLogin', (req, res, next) => {
+    // 判断是否已经登录 用于页面刷新存储登录信息
+    if (req.cookies.userId) {
+        res.json({
+            status: "0",
+            msg: '',
+            result: req.cookies.userName
+        })
+    } else {
+        res.json({
+            status: "1",
+            msg: '未登录',
+            result: ""
+        })
+    }
+})
+
+10.express删除子列表文件
+    let userId = req.cookies.userId,
+        addressId = req.body.addressId;
+   
+    User.update({
+        userId: userId //一级
+    }, {
+        $pull: { //$pull 删除
+            "addressList": //二级
+            {
+                "addressId": addressId   //三级  删除的条件
+            }
+        }
+    },(err,data)=>{})
+
+11、express子级复杂修改
+
+      let userId = req.cookies.userId,
+        productId = req.body.productId,
+        productNum = req.body.productNum,
+        checked = req.body.checked
+    //修改
+    User.update({//层级 doc=>cartList=>productId、productNum、checked 
+      "userId": userId, 
+      "cartList.productId": productId
+     }, { 
+      "cartList. $.productNum": productNum,
+      "cartList.$.checked": checked 
+     }, function(err, doc) {}）
+
+12、如何让node app的程序一直运行
+    。npm install -g forever
+    。forever start xxx.js  --启动
+     如果你需要用npm start来运行你的程序，则用命令
+                                   forever start -c "npm start" 路径
+    。forever stop xxx.js   --结束
+    。 forever start -l forever.log -o out.log -e err.log index.js  #输出日志和错误
+    。 rm /root/.forever/forever.log  删除日志：
+
+13、express设置跨域请求头
+//设置跨域请求头
+app.all('*', function(req, res, next) {
+   res.header("Access-Control-Allow-Origin", "*");
+   res.header('Access-Control-Allow-Headers', 'Content-Type, Content-Length, Authorization, Accept, X-Requested-With , yourHeaderFeild');
+   res.header("Access-Control-Allow-Methods","PUT,POST,GET,DELETE,OPTIONS");
+   res.header("X-Powered-By",' 3.2.1')
+   res.header("Content-Type", "application/json;charset=utf-8");
+   next();
+});
+
+
+14、nodejs生成UID（唯一标识符）——node-uuid模块
+使用起来很简单，两种：
+1、uuid.v1(); -->基于时间戳生成  （time-based）
+2、uuid.v4(); -->随机生成  (random)
+
+ 步骤   01、cnpm i node-uuid --save
+          02、 var UUID = require('uuid');
+             var ID = UUID.v1();
+
+

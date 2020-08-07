@@ -1,0 +1,18 @@
+1、java项目数据结构
+* service层作用: 业务层, 功能的实现, 与controller控制层和数据访问层DAO交互, 将对数据库的操作交给DAO数据访问层来处理
+* dao层作用: 数据访问层, 用来操作数据库表的数据
+* db数据库: 这里指MySQL
+* domain 实体包: 存放JavaBean(可复用类)
+* tools工具包:存放项目中使用到的工具类
+* test 测试包: 存放项目功能测试的代码
+
+
+2、http://java.sun.com/jsp/jstl/core 的使用
+    01、项目引入jstl、standard  java包  
+    02、在WEB-INF/lib下放入jstl、standard  java包  
+    03、jsp文件顶部  <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+
+3、java分页查询
+     例：select * from product limit 0,5   //从第0+1条数据开始,查出5条数据
+            select * from product limit 5,5   //从第5+1条数据开始,查出5条数据
+            String sql="select * from product limit ?,?";

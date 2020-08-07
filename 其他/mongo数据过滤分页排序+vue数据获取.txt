@@ -1,0 +1,159 @@
+一、express-api mongo文件
+    routes/goods.js
+
+const express = require('express');
+const router = express.Router();
+const mongoose = require('mongoose');
+const Goods = require('../models/goods');
+
+// 链接数据库
+var urls = "mongodb://127.0.0.1:27017/dumall"
+mongoose.connect(urls);
+
+// 判断数据库是否链接成功
+mongoose.connection.on('connected', function() {
+    console.log('MongoDB 数据库链接成功')
+})
+mongoose.connection.on('error', function() {
+    console.log('MongoDB 数据库链接失败')
+})
+mongoose.connection.on('disconnected', function() {
+    console.log('MongoDB 数据库链接已断开')
+})
+
+router.get('/', (req, res, next) => {
+        let page = parseInt(req.param('page')); //获取url上传递的页数 （第几页）
+        let pageSize = parseInt(req.param('pageSize')); //每页数据条数条数
+        let sort = req.param('sort'); //1或-1 1位升序 -1为降序
+        let skip = (page - 1) * pageSize;
+        let params = {};
+        // 获取限定查询数据 .find()初次限制  .skip()向后多少条数据   limit()限定数据数量
+        let goodsModel = Goods.find(params).skip(skip).limit(pageSize)
+            // 检索 salePrice项(价格)  升序或降序排列  默认为升序
+        goodsModel.sort({ 'salePrice': sort })
+
+        // 获取过滤排序后的数据
+        goodsModel.exec((err, doc) => {
+            if (err) {
+                res.json({ //输出json格式数据
+                    status: "1",
+                    msg: err.message
+                })
+            } else {
+                res.json({
+                    status: '0',
+                    msg: '',
+                    result: {
+                        count: doc.length,
+                        list: doc
+                    }
+                })
+            }
+        })
+    })
+    // 查询案例   第一页每页8条数据升序排列
+    //  http://localhost:3000/goods?page=1&pageSize=8&sort=1
+
+module.exports = router;
+  
+
+
+二、vue调取数据文件中
+vue 文件
+
+  <ul>
+            <li v-for="(item,index) in goodsList" >
+              <div class="pic">
+                <a href="#"><img v-lazy="'/static/' + item.productImage" alt=""></a>
+              </div>
+              <div class="main">
+                <div class="name">{{item.productName}}</div>
+                <div class="price">{{item.salePrice}}</div>
+                <div class="btn-area">
+                  <a href="javascript:;" class="btn btn--m">加入购物车</a>
+                </div>
+              </div>
+            </li>
+          
+          </ul>
+          <div  v-infinite-scroll="loadMore" infinite-scroll-disabled="busy" infinite-scroll-distance="20" class="load-more">
+     加载中...
+</div>
+
+js
+export default {
+    name:'GoodsList',
+    components:{navHeader,navFooter,navBread},
+    data(){
+       return{
+            goodsList:[],
+            sortFlag:true,
+            page:1,
+            pageSize:8,
+            busy:true
+       }
+    }, 
+    mounted:function(){
+      this.getGoodsList()
+    },
+    methods:{
+        getGoodsList(flag){//获取产品列表数据  传入参数判断是否需要累加
+            let param={
+              page:this.page,
+              pageSize:this.pageSize,
+              sort:this.sortFlag?1:-1
+            }
+            axios.get('/goods',{
+              params:param //传入数据
+            }).then(result=>{
+                let res=result.data;
+               if(res.status=="0"){
+                 if(flag){
+                    this.goodsList=this.goodsList.concat(res.result.list)  //加载数据与前数据合并
+
+                    if(res.result.count==0){
+                       this.busy=true;
+                    }else{
+                       this.busy=false;
+                    }
+                 }else{
+                    this.goodsList=res.result.list;
+                    this.busy=false;
+                 }
+                  
+                             
+               }else{
+                 this.goodsList=[]
+               }
+
+               
+
+                console.log(res.result)
+            })
+        },
+        sortGoods(){//按价格排序
+             console.log(this.sortFlag)
+              this.sortFlag=!this.sortFlag;
+              this.page=1;
+              this.pageSize=8;
+              this.getGoodsList()
+        },
+        loadMore: function() {//页面滚动加载插件导入
+             this.busy = true;
+             setTimeout(() => {
+                  this.page++;
+                  this.getGoodsList(true)
+             }, 500);
+    }
+
+    }
+}
+
+main.js
+
+    // 向下滚动页面加载插件
+import infiniteScroll from 'vue-infinite-scroll'
+Vue.use(infiniteScroll)
+
+npm install vue-infinite-scroll --save
+

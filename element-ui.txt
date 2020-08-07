@@ -1,0 +1,5 @@
+1、el-menu 递归使用时报错  (Uncaught RangeError: Maximum call stack size exceeded.)
+     解决：1、子组件 el-submenu添加属性  :popper-append-to-body="false" ；
+               2、el-menu父组件设置overflow: visible;
+
+     

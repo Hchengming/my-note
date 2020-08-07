@@ -1,0 +1,20 @@
+1、this.$refs[formName].resetFields()   清空表单数据
+    例：<Form ref="userForm" >
+             <input />
+          </Form>
+          <button @click="btn('fromName')">点击清空表单数据</button>
+        js.
+        methods:{
+            btn(name){
+                 this.$refs[formName].resetFields() 
+            }
+        }
+
+2、this.$Message.error('查询异常！');   异常弹框弹出
+
+3、this.$refs[ruleForm].validate() 自定义表单验证
+this.$refs[ruleForm].validate((valid)=>{
+     if(valid){//成功
+        
+     }
+}) 

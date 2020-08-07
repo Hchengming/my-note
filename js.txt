@@ -1,0 +1,476 @@
+
+
+
+
+1.回车键点击事件；
+  $(document).keydown(function(event){
+        if(event.keyCode==13){
+              ajaxs();
+         }
+   });
+
+2.jquery鼠标滚动事件
+   $(window).scroll(function() {
+       var a= $(document).scrollTop();  ;//ie8鼠标滚动高度获取
+       console.log(111)
+    });
+
+3.audio音乐切换
+       $('#music1')[0].pause();
+        var b=data[i].src;
+        $('#music1').attr('src', b);
+        $('#music1')[0].play();
+
+4.js加入收藏
+<script>
+  function _addFavorite() {
+      var url = window.location;
+      var title = document.title;
+      var ua = navigator.userAgent.toLowerCase();
+      if (ua.indexOf("360se") > -1) {
+          alert("由于360浏览器功能限制，请按 Ctrl+D 手动收藏！");
+      }
+      else if (ua.indexOf("msie 8") > -1) {
+          window.external.AddToFavoritesBar(url, title); //IE8
+      }
+      else if (document.all) {//IE类浏览器
+        try{
+         window.external.addFavorite(url, title);
+        }catch(e){
+         alert('您的浏览器不支持,请按 Ctrl+D 手动收藏!');
+        }
+      }
+      else if (window.sidebar) {//firfox等浏览器；
+          window.sidebar.addPanel(title, url, "");
+      }
+      else {
+          alert('您的浏览器不支持,请按 Ctrl+D 手动收藏!');
+      }
+  }    
+  </script>
+<a href="javascript:void(0)" onclick="_addFavorite()">加入收藏</a>
+
+5、网站鼠标右键禁用
+ <script>
+        document.oncontextmenu = function(e) {
+            return false
+        }
+ </script>
+
+6、js-页面打开后滚动到特定位置的效果
+滚动页面的方法有scroll、scrollBy和scrollTo，三个方法都带两个参数：x(X轴上的偏移量)和y(Y轴上的偏移量)。因为是要滚动到页面底部，
+所以参数x为0，y为页面的滚动高度。另外，页面的滚动高度必须在网页加载完成后才能获取到，所以触发事件用onload。?
+      方法一：用scroll方法实现。?
+　　<body onload="scroll(0,document.body.scrollHeight) ">?
+　　<script>?
+　　document.write(new Array(100).join("<br>"))?
+　　</script>?
+　　方法二：用scrollBy方法实现。?
+　　<body onload="scrollBy(0,document.body.scrollHeight) ">?
+　　<script>?
+　　document.write(new Array(100).join("<br>"))?
+　　</script>?
+　　方法三：用scrollTo方法实现。?
+　　<body onload="scrollTo(0,document.body.scrollHeight)">?
+　　<script>?
+　　document.write(new Array(100).join("<br>"))?
+　　</script>
+
+7、addEventListener() 方法  事件监听 =====》removeEventListener()删除方法
+    addEventListener()相比于on()可以对同个元素添加多个相同事件
+    element.addEventListener(event, function, useCapture)
+    useCapture	可选。布尔值，指定事件是否在捕获或冒泡阶段执行
+    例：您可以在文档中添加许多事件，添加的事件不会覆盖已存在的事件。
+    该实例演示了如何在<button>元素中添加两个点击事件：
+    document.getElementById("myBtn").addEventListener("click", myFunction,flase);
+    document.getElementById("myBtn").addEventListener("click", someOtherFunction,false);
+
+8、移动端禁用及恢复触摸页面滚动
+Chrome 51、Firefox 49及以上
+//阻止默认行为函数
+function preventDefault(e) {
+    e.preventDefault();
+}
+// 禁用触摸滚动页面
+document.addEventListener('touchmove', preventDefault, {passive: false});
+// 恢复触摸滚动页面
+document.removeEventListener('touchmove', preventDefault, {passive: false});
+
+Chrome 51、 Firefox 49以下
+//阻止默认行为函数
+function preventDefault(e) {
+    e.preventDefault();
+}
+// 禁用触摸滚动页面
+document.addEventListener('touchmove', preventDefault, false);
+// 恢复触摸滚动页面
+document.removeEventListener('touchmove', preventDefault, false);
+
+9、判断客户端为手机端还是移动端
+   function IsPC() {
+            var userAgentInfo = navigator.userAgent;
+            var Agents = ["Android", "iPhone", "SymbianOS", "Windows Phone", "iPad", "iPod"];
+            var flag = true;
+            for (var v = 0; v < Agents.length; v++) {
+                if (userAgentInfo.indexOf(Agents[v]) > 0) {
+                    //成立则为移动端
+                    flag = false;
+                    break;
+                }
+            }
+            return flag;
+        }
+        console.log(IsPC()) //true|pc   false|移动
+
+10、es6数组去重
+  var a=[1,2,3,2]
+   console.log([...new Set[a]) ===> //{1,2,3}
+  es5去重
+  function uniq(array){
+    var temp = []; //一个新的临时数组
+    for(var i = 0; i < array.length; i++){
+        if(temp.indexOf(array[i]) == -1){
+            temp.push(array[i]);
+        }
+    }
+    return temp;
+   }
+
+11、字符串全局替换
+    txt.replace(/；/g, ';<br/>')   将所有；替换成;<br/>
+
+12、保留num位小数  toFixed(num)  
+例：（1.00005).toFixed(2)   //1.00
+
+13、判断元素是否加载完成
+     我们使用document的readyState属性：document.readyState
+     readyState 属性返回当前文档的状态。
+　　该属性返回以下值:
+      uninitialized - 还未开始载入
+      loading - 载入中
+      interactive - 已加载，文档与用户可以开始交互
+      complete - 载入完成  (loaded)
+
+14、纯js获取元素方法 
+       document.querySelector()获取一个
+　　document.querySelectorAll()获取多个
+       var chils= s.childNodes;  //得到s的全部子节点
+       var par=s.parentNode;   //得到s的父节点
+       var ns=s.nextSbiling;   //获得s的下一个兄弟节点
+       var ps=s.previousSbiling;  //得到s的上一个兄弟节点
+       var fc=s.firstChild;   //获得s的第一个子节点
+       var lc=s.lastChile;   //获得s的最后一个子节点
+
+15、js对象深度克隆 
+var cloneObj = function (obj) {  
+    var newObj = {};  
+    if (obj instanceof Array) {  
+        newObj = [];  
+    }  
+    for (var key in obj) {  
+        var val = obj[key];  
+        //newObj[key] = typeof val === 'object' ? arguments.callee(val) : val; //arguments.callee 在哪一个函数中运行，它就代表哪个函数, 一般用在匿名函数中。  
+        newObj[key] = typeof val === 'object' ? cloneObj(val): val;  
+    }  
+    return newObj;  
+};  
+
+16、对象遍历
+ Object.keys(this.fromModelAlls.menuForm).forEach(item=>{
+        if(item.search('Id')>2){
+          this.fromModelAlls.menuForm[item]=""
+        }
+ })
+for (var i in this.fromModelAlls.menuForm) {
+  console.log('键：' + i)
+  console.log('值：' + this.fromModelAlls.menuForm[i])
+}
+17、js获取字符串的字节长度(汉字占两个字节，其他算一个字节)
+//获得输入框中字符长度
+    function getLength(val) {  
+        var str = new String(val);  
+        var bytesCount = 0;  
+        for (var i = 0 ,n = str.length; i < n; i++) {  
+            var c = str.charCodeAt(i);  
+            if ((c >= 0x0001 && c <= 0x007e) || (0xff60<=c && c<=0xff9f)) {  //其他字符
+                bytesCount += 1;  
+            } else {  //汉字字符
+                bytesCount += 2;  
+            }  
+        }  
+        return bytesCount;  
+    }
+
+18、js获取几年、几月、几天、几周前时间
+     //获取系统当前时间
+        var nowdate = new Date();
+        var y = nowdate.getFullYear();
+        var m = nowdate.getMonth()+1;
+        var d = nowdate.getDate();
+        var formatnowdate = y+'-'+m+'-'+d;
+        $("#enddate").datebox("setValue",formatnowdate);
+        //获取系统前一周的时间
+        var oneweekdate = new Date(nowdate-7*24*3600*1000);
+        var y = oneweekdate.getFullYear();
+        var m = oneweekdate.getMonth()+1;
+        var d = oneweekdate.getDate();
+        var formatwdate = y+'-'+m+'-'+d;
+        $("#fdate").datebox("setValue",formatwdate);
+        //获取系统前一个月的时间
+        nowdate.setMonth(nowdate.getMonth()-1);
+        var y = nowdate.getFullYear();
+        var m = nowdate.getMonth()+1;
+        var d = nowdate.getDate();
+        var formatwdate = y+'-'+m+'-'+d;
+        $("#fdate").datebox("setValue",formatwdate)
+        //获取一年前时间
+        startTime = new Date();
+        startTime.setFullYear(nowdate.getFullYear() - 1);
+        var y = startTime .getFullYear();
+        var m = startTime .getMonth()+1;
+        var d = startTime .getDate();
+        var formatwdate = y+'-'+m+'-'+d;
+        $("#fdate").datebox("setValue",formatwdate
+
+19、[HTML5] FileReader对象--文件读取对象    详情：https://www.cnblogs.com/hhhyaaon/p/5929492.html
+       FileReader主要用于将文件内容读入内存，通过一系列异步接口，可以在主线程中访问本地文件。
+    var reader = new FileReader();
+        .readAsArrayBuffer(file):void	异步按字节读取文件内容，结果用ArrayBuffer对象表示
+        .readAsBinaryString(file):void	异步按字节读取文件内容，结果为文件的二进制串
+        .readAsDataURL(file):void	   异步读取文件内容，结果用data:url的字符串形式表示
+        .readAsText(file,encoding):void	异步按字符读取文件内容，结果用字符串形式表示
+      案例：
+var input  = document.getElementById("file"); //input file
+input.onchange = function(){
+    var file = this.files[0];
+    if(!!file){
+        //读取本地文件，以gbk编码方式输出
+        var reader = new FileReader();
+        reader.readAsText(file,"UTF-8");
+        reader.onload = function(){
+            //读取完毕后输出结果
+            console.log(this.result);
+        }
+    }
+}
+
+20、js去除字符串空格(空白符)
+       去除字符串内所有的空格：str = str.replace(/\s*/g,"");
+　　去除字符串内两头的空格：str = str.replace(/^\s*|\s*$/g,"");
+　　去除字符串内左侧的空格：str = str.replace(/^\s*/,"");
+　　去除字符串内右侧的空格：str = str.replace(/(\s*$)/g,"")
+
+21、JSON.stringify(value, replacer, space)    JSON数据格式化输出
+     value   要转换为JSON字符串的值。
+     replacer 可选的   其改变的字符串化过程的行为的函数，或阵列String和Number被包括在JSON字符串充当用于选择/过滤值对象的属性的白名单的对象。如果null提供或未提供此值，则对象的所有属性都包含在生成的JSON字符串中。
+     space 可选的   一个String或者Number这是我们用来插入空白到输出JSON字符串为了提高可读性对象。
+     如果是a Number，则表示用作空格的空格字符数; 这个数字的上限为10（如果它更大，那么值就是这个数字10）。小于1的值表示不应使用空格。
+     如果是a String，则将字符串（或字符串的前10个字符，如果长于该字符串）用作空格。如果未提供此参数（或为null），则不使用空格。
+     例：let str = JSON.stringify(data,null,"\t")     ==》JSON数据格式化输出
+
+22、html文件内容读取写入  $.get(url,function(a){$(div).html($(a).find('body'))})
+ $.get("../../../../static/font/demo_index.html", function (a) {
+        //  $(div).html($(a).find('body')) 
+        console.log($(a).find('.font-class .icon_lists'))
+})
+
+23、js构造函数
+function person(name,age){
+            this.name = name;
+            this.age = age;
+            this.family = ["爸爸","妈妈","哥哥"];
+            this.sayName = function(){
+                console.log(this.name);
+            };
+            this.myFamily = function(){
+                var size = this.family.length;
+                var str = "家庭成员：";
+                for(var i = 0;i < size;i++){
+                    str += this.family[i]+",";
+                }
+                console.log(str);
+            };
+        }
+        var p = new person("张三",22);
+        p.sayName();//张三
+        p.family.push("弟弟");
+        p.myFamily();//家庭成员：爸爸，妈妈，哥哥，弟弟
+        var p1 = new person("李四",22);
+        p1.sayName();//李四
+        p1.myFamily();//家庭成员：爸爸，妈妈，哥哥
+24、apply()与call()的区别
+     B.apply(A, arguments);即A对象应用B对象的方法。
+     B.call(A, args1,args2);即A对象调用B对象的方法。
+
+   例：apply()
+           function add(a,b){
+             return a+b;  
+           }
+function sub(a,b){
+  return a-b;  
+}
+var a1 = add.apply(sub,[4,2]);　　//sub调用add的方法     alert(a1);  //6  
+var a2 = sub.apply(add,[4,2]);      //add调用sub的方法     alert(a2);  //2
+
+25、元素的鼠标事件以及clientX、offsetX、screenX、pageX、x的区别（e）=>{}
+       一、clientX、clientY
+             点击位置距离当前body可视区域的x，y坐标
+       二、pageX、pageY
+             对于整个页面来说，包括了被卷去的body部分的长度
+       三、screenX、screenY或x、y
+             点击位置距离当前电脑屏幕的x，y坐标
+       四、offsetX、offsetY
+             相对于带有定位的父盒子的x，y坐标
+
+26、空对象判断
+JSON.stringify(obj)=="{}"  //true or false
+
+27、JS 判断两个数组是否相同
+例： JSON.stringify([1,2,3].sort()) === JSON.stringify([3,2,1].sort()); //true
+        [1,2,3].sort().toString() === [3,2,1].sort().toString(); //true 
+
+28、禁止浏览器input记住密码
+方法一
+a、顶部添加两个input框
+  <input type="text"  class="model_tops"> 
+  <input type="password" class="model_tops"> 
+b、密码框添加属性  autocomplete='new-password'
+方法二
+  $(function() {
+      $("input[type='password']").attr("readonly", "readonly");
+      $("input[type='password']").click(function() {
+        //当某个被input框点击的时候,就删掉被点击的这个input框的只读属性readonly
+        $(this).removeAttr("readonly");
+      });
+    });
+
+29、数组和对象区分
+let arr=[1,2,3,4]
+let obj={asd:'123'}
+arr.constructor==Array   //true
+obj.constructor==Object   //true
+
+30、数组中汉字排序
+var arr = ['南京', '北京', '上海', '杭州', '深圳'];
+  function sortChinese (arr) { // 参数： 排序的数组
+    arr.sort(function (item1, item2) {
+      return item1.localeCompare(item2, 'zh-CN');
+    })
+  }
+  sortChinese(arr)
+  console.log(arr); //  ["北京", "杭州", "南京", "上海", "深圳"]
+
+
+31、javascript捕获页面窗口关闭事件
+
+onUnload方法是在关闭窗口之后执行
+onbeforeUnload方法是在关闭窗口之前执行
+
+window.onbeforeunload= function(event) { return confirm("确定离开此页面吗？"); }
+window.onunload = function(event) { return confirm("确定离开此页面吗？"); }
+例：离开页面前向后台发出请求（暂时无法区分刷新和离开页面）
+  getAdd(txt) {
+      $.ajax({
+        type: "POST",
+        url: "http://192.168.3.178:4000/icon/insert",
+        data: {},
+        async: false,
+        dataType: "json",
+        success(data) {
+          localStorage.setItem("hcm", JSON.stringify(data.data));
+        },
+        error: function(e) {
+          console.log(e);
+        }
+      });
+    },
+     window.onunload = function() {
+          getAdd();
+      };
+
+32、toFixed() 方法可把 Number 四舍五入为指定小数位数的数字。
+     2.3456.toFixed(2)    //2.35
+
+
+
+
+33、js 读取txt文件中文乱码解决(设置 “gb2312”文件编译格式)
+ var reader = new FileReader(); //新建一个FileReader--文件读取对象
+      reader.readAsText(files[0], "gb2312"); //异步按字符读取文件内容，结果用字符串形式表示
+      reader.onload=(evt)=>{
+        this.htmlForm.fileName = files[0].name;
+        console.log(reader.result)  //打印读取文件内容
+        this.htmlForm.str = reader.result;
+        this.$emit('getHtmlData',reader.result,files[0].name)
+};
+
+35、ajax请求
+      $.ajax({
+        url:
+          "http://172.22.1.8:18083/btms/api/v1/batteryData2SH/canIImportData", //请求路径
+        dataType: "json", //数据类型
+        type: "POST", //请求方式  默认为get
+        async: false, //是否异步
+        contentType: "application/json;charset=UTF-8",
+        headers: {
+          "H-User-Token": sessionStorage.getItem("userToken")
+        },
+        data: JSON.stringify(createParameter({})), //返回后台的数据
+        success(data) {
+          console.log(data);
+          if (data.rspCode == "00") {
+            _this.$refs["upload"].uploadPhoto([".xlsx"], true);
+          } else {
+            _this.$Message.error(data.rspMessage);
+          }
+        },
+        error(msg) {
+          console.log(msg);
+        },
+        fail() {
+          console.log("请求失败");
+        }
+      });
+
+36、对象的合并 Object.assign();
+const target = { a: 1 };
+const source1 = { b: 2 };
+const source2 = { c: 3 };
+
+Object.assign(target, source1, source2);
+target // {a:1, b:2, c:3}
+37、Promise语法
+ //返回Promise
+ //return Promise.resolve(value)
+    let promise=new Promise((reslove, reject) => {
+                reslove('成功');//成功返回
+                reject("异常")//抛出异常
+                throw new Error('promise使用Error抛出异常') //使用throw异常不支持放在定时器中
+        })
+    promise().then(result => {//reslove返回数据
+        console.log(result);
+    }).catch(err => {//reject抛出异常
+        console.log(err.message);
+    })
+
+38、es7常用
+a、函数异步调用
+异步函数存在以下四种使用形式：
+
+函数声明： async function foo() {}
+函数表达式： const foo = async function() {}
+对象的方式： let obj = { async foo() {} }
+箭头函数： const foo = async () => {}
+例：async抛出异常
+    let sayHi = async sayHi => {
+            throw new Error('async抛出异常');
+    }
+    sayHi().then(res => {
+        console.log(res);
+    })
+    .catch(err => {
+        console.log(err.message);
+    })
+
+39、includes()    查找一个值在不在数组里
+       ['a', 'b', 'c'].includes('a')     // true

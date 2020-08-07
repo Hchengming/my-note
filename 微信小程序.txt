@@ -1,0 +1,94 @@
+1、小程序的生命周期回调
+属性	类型	默认值	必填	说明
+onLaunch	function		否	生命周期回调——监听小程序初始化。    参数也可以使用 wx.getLaunchOptionsSync 获取
+onShow	function		否	生命周期回调——监听小程序启动或切前台。 也可以使用 wx.onAppShow 绑定监听
+onHide	function		否	生命周期回调——监听小程序切后台。   也可以使用 wx.onAppHide 绑定监听
+onError	function		否	错误监听函数。 也可以使用 wx.onError 绑定监听
+onPageNotFound	function		否	页面不存在监听函数。 也可以使用 wx.onPageNotFound 绑定监听
+
+2、使用 Page 构造器注册页面
+Page({
+  data: {
+    text: "This is page data."
+  },
+  onLoad: function(options) {
+    // 页面创建时执行
+  },
+  onShow: function() {
+    // 页面出现在前台时执行
+  },
+  onReady: function() {
+    // 页面首次渲染完毕时执行
+  },
+  onHide: function() {
+    // 页面从前台变为后台时执行
+  },
+  onUnload: function() {
+    // 页面销毁时执行
+  },
+  onPullDownRefresh: function() {
+    // 触发下拉刷新时执行
+  },
+  onReachBottom: function() {
+    // 页面触底时执行
+  },
+  onShareAppMessage: function () {
+    // 页面被用户分享时执行
+  },
+  onPageScroll: function() {
+    // 页面滚动时执行
+  },
+  onResize: function() {
+    // 页面尺寸变化时执行
+  },
+  onTabItemTap(item) {
+    // tab 点击时执行
+    console.log(item.index)
+    console.log(item.pagePath)
+    console.log(item.text)
+  },
+  // 事件响应函数
+  viewTap: function() {
+    this.setData({
+      text: 'Set some data for updating view.'
+    }, function() {
+      // this is setData callback
+    })
+  },
+  // 自由数据
+  customData: {
+    hi: 'MINA'
+  }
+})
+
+3、路由方式
+ a.打开新页面  调用 API wx.navigateTo     使用组件 <navigator open-type="navigateTo"/>
+ b.页面重定向  调用 API wx.redirectTo       使用组件 <navigator open-type="redirectTo"/>
+ c.页面返回      调用 API wx.navigateBack  使用组件<navigator open-type="navigateBack">
+ d.Tab 切换     调用 API wx.switchTab        使用组件 <navigator open-type="switchTab"/>
+ e.重启动	      调用 API wx.reLaunch         使用组件 <navigator open-type="reLaunch"/>
+
+4、wx:for
+使用 wx:for-item 可以指定数组当前元素的变量名，
+使用 wx:for-index 可以指定数组当前下标的变量名：
+<view wx:for="{{array}}" wx:for-index="idx" wx:for-item="itemName">
+  {{idx}}: {{itemName.message}}
+</view>
+
+5、include  公共部分使用
+include 可以将目标文件除了 <template/> <wxs/> 外的整个代码引入，相当于是拷贝到 include 位置，如：
+<!-- index.wxml -->
+<include src="header.wxml"/>
+<view> body </view>
+<include src="footer.wxml"/>
+
+6、wx界面交互
+wx.showToast(Object object)  显示消息提示框  wx.hideToast()隐藏
+wx.showModal(Object object)  显示模态对话框
+wx.showLoading(Object object) 显示 loading 提示框。需主动调用 wx.hideLoading() 才能关闭提示框
+wx.showActionSheet(Object object)  显示操作菜单 
+
+7、下拉刷新
+wx.startPullDownRefresh(Object object)  开始下拉刷新
+wx.stopPullDownRefresh(Object object)  停止当前页面下拉刷新
+

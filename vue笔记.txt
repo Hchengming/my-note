@@ -1,0 +1,405 @@
+1、vue-cli构建SPA应用
+   01--npm install -g vue-cli
+   02--vue init webpack-simple demo  //webpack简化版
+   02--vue init webpack demo2    //webpack正常版
+2、vue和React相同点
+   。利用虚拟DOM实现快速渲染
+   。轻量级
+   。响应式组件
+   。服务器端渲染
+   。易于集成路由工具，打包工具以及状态管理工具
+   。优秀的支持和社区
+
+3、vue和react不同点
+   vue:
+       。模板和渲染函数的弹性选择
+       。简单的语法及项目构建
+       。更快的渲染速度和更小的体积
+   React:
+       。更适用于大型应用和更好的可测试性
+       。同时适用于web端和原生App
+       。更大的生态圈带来的更多支持和工具
+4、vue的核心思想
+    。数据驱动
+    。组件化
+
+5、vue init webpack demo2 安装时
+    ？Project name     --项目名
+    ？project description(a vue.js project)  --项目说明
+    ？Auther   --作者
+    ？vue build(standalone)   --vue打包是否脱机独立
+    ？install vue-router    --是否加载vue-router模块
+    ？use eslint to lint your code   --是否使用EsLIt来擦写代码 
+    ？set up unit tests   --是否设置单元测试
+    ？Setup e2e tests with Nightwatch?  --用NeWTATCH设置E2E测试？
+
+6、package.json 中
+   dependencies：项目依赖库
+   devDependencies：项目开发依赖库
+   engines：引擎
+
+7、v-on事件
+   v-on:click.stop   阻止事件冒泡
+   v-on:click.prevent 阻止默认事件
+   v-on:click.once    只绑定一次事件
+   v-on:click.self    阻止子元素继承事件 
+   v-on:scroll.passive  提升移动端的性能，不阻止默认事件
+
+8.按键修饰符
+    v-on:keyup.enter
+              .enter
+              .tab 
+              .delete (捕获“删除”和“退格”键)
+              .esc
+              .space
+              .up
+              .down
+              .left
+              .right
+   <input @keyup.alt.67="clear">
+
+9.v-model修饰符
+   v-model.lazy=""   输入内容变化后同步
+   v-model.number=""  转换为数字
+   v-model.trim="" 去除空格
+
+10.prop类型验证
+  props:{
+  propE: {
+      type: Object,
+      // 对  象或数组默认值必须从一个工厂函数获取
+      default: function () {
+        return { message: 'hello' }
+      }
+    }
+}
+
+
+11、<keep-active></keep-active> 组件缓存
+    <keep-alive>
+       <component v-bind:is="currentTabComponent"></component>
+    </keep-alive>
+
+12、vue动画过渡
+   模式mode=""
+    in-out：新元素先进行过渡，完成之后当前元素过渡离开。
+    out-in：当前元素先进行过渡，完成之后新元素过渡进入。
+   全过程 重前到后
+   v-enter：定义进入过渡的开始状态。在元素被插入之前生效，在元素被插入之后的下一帧移除。
+   v-enter-active：定义进入过渡生效时的状态。在整个进入过渡的阶段中应用，在元素被插入之前生效，在过渡/动画完成之后移除。这个类可以被用来定义进入过渡的过程时间，延迟和曲线函数
+   v-enter-to: 2.1.8版及以上 定义进入过渡的结束状态。在元素被插入之后下一帧生效 (与此同时 v-enter 被移除)，在过渡/动画完成之后移除。
+   v-leave: 定义离开过渡的开始状态。在离开过渡被触发时立刻生效，下一帧被移除。
+   v-leave-active：定义离开过渡生效时的状态。在整个离开过渡的阶段中应用，在离开过渡被触发时立刻生效，在过渡/动画完成之后移除。这个类可以被用来定义离开过渡的过程时间，延迟和曲线函数。
+   v-leave-to: 2.1.8版及以上 定义离开过渡的结束状态。在离开过渡被触发之后下一帧生效 (与此同时 v-leave 被删除)，在过渡/动画完成之后移除。
+
+13.vue-router钩子函数（进入和离开页面时）
+
+  beforeRouteEnter:(to,from,next)=>{
+  console.log("准备进入路由模板");
+next();
+},
+beforeRouteLeave: (to, from, next) => {
+  console.log("准备离开路由模板");
+  next();
+},
+
+14.vue-resource的7种请求API
+  .get(url,[options])
+  .head(url,[options])
+  .delete(url,[options])
+  .jsonp(url,[options])
+  .post(url,[body],[options])
+  .put(url,[body],[options])
+  .patch(url,[body],[options])
+
+15.vue-resource的请求参数
+   url  请求的url
+   method  请求的http方法
+   body    request body(请求的数据主题)
+   params   请求的URL参数
+   headers   requset header（设置请求头）
+   timeout   单位为毫秒的超时时间
+   before    请求发送前的处理函数
+   credientials     表示跨域请求时是否需要凭证
+
+
+16.vue图片懒加载  vue-lazyload
+    1--npm insyall vue-lazyload --save
+    2-- main.js  
+    // 图片懒加载插件导入
+import VueLazyLoad from 'vue-lazyload'
+Vue.use(VueLazyLoad,{
+   loading:'/static/loading-svg/loading-bars.svg'
+})
+    3.图片格式 <img v-lazy="'/static/' + item.prodcutImg"
+
+
+17.vue proxyTable 接口跨域请求调试
+   VUE解决通过proxyTable:
+
+   在 config/index.js 配置文件中  dev-->
+   例： proxyTable: {
+            '/goods': {
+                target: 'http://localhost:3000'
+            }
+        }
+
+   vue模块中调用：
+   相当于直接解决跨域后调用=》http://localhost:3000/goods
+   axios.get('/goods').then(result=>{
+                
+    })
+
+18.vue-infinite-scroll插件  页面内容滚动加载插件
+   详情：https://www.npmjs.com/package/vue-infinite-scroll
+   <div v-infinite-scroll="loadMore" infinite-scroll-disabled="busy" infinite-scroll-      distance="10">
+  ...
+  </div>
+   v-infinite-scroll="loadMore"   滚动方法
+   infinite-scroll-disabled="busy"  是否触发方法
+   infinite-scroll-distance="10" 向下滚动触发距离
+
+19.点击组件动态切换
+template
+    <button @click="toggleCom">组件切换</button>
+    <transition name="fade" mode="out-in">
+        <div :is="currentView"></div>
+    </transition>
+js
+     import B1 from './components/b1'
+     import B2 from './components/b2'
+   data(){return  currentView:B1}
+   methods==>
+      toggleCom(){
+        if(this.currentView==B1){
+          this.currentView=B2
+        }else{
+          this.currentView=B1
+        }
+      }
+css
+    .fade-enter-active, .fade-leave-active {
+     transition: opacity .5s ease-out;
+   }
+    .fade-enter, .fade-leave-to{
+     opacity: 0;
+    }
+
+20、js过渡动画-点击切换
+     <button @click="show = !show">js过渡动画-点击切换</button>
+       <transition
+       @before-enter="beforeEnter"
+       @enter="enter"
+       @leave="leave"
+       :css="false"
+       >
+        <p class="animate-p" v-show="show">i am show</p>
+       </transition>
+  js==>
+      data () {
+    return {
+      msg: 'js过渡动画',
+      show:true
+    }
+
+  },
+  methods:{
+    beforeEnter(el){
+      $(el).animate({
+        left:-500,
+        opacity:0
+      })
+    },
+    enter(el,done){
+        $(el).animate({
+          left:0,
+          opacity:1
+        },{
+          duration:1500,
+          complete:done
+        })
+    },
+    leave(el,done){
+      $(el).animate({
+        left:500,
+        opacity:0
+      },{
+        duration:1500,
+        complete:done
+      })
+    }
+  }
+
+
+21、vue路由传参
+   <router-link class="btn btn--m btn--red" v-bind:to="{path:'orderConfirm',query:{'addressId':selectAddressId}}">下一页</router-link>
+    下一页获取{{this.$route.query.addressId}}
+
+22、vue-cli jquery全局引入
+     。npm install --save jquery
+     。在webpack.dev.conf.js中
+       plugins: [
+          new webpack.optimize.CommonsChunkPlugin('common.js'),
+          new webpack.ProvidePlugin({
+                jQuery: "jquery",
+               $: "jquery"
+          })
+       ]
+     。在main.js 引入 
+        import $ from 'jquery'
+
+23、vue-cli mock.js mock.js模拟数据使用
+       。npm install --save-dev mockjs
+       。创建mock.js  例：
+        import Mock from 'mockjs'
+       Mock.mock('/api/data', (req, res) => {
+          return {
+              data: ['a','b']
+                }
+      })
+     。main.js中导入
+      import Mock from '@/mock/mock'
+     。页面使用
+       axios.post('/api/data').then(data=>{
+           console.log(data)
+       })
+
+24、vue ie浏览器生成环境兼容
+方法一
+      npm 安装 babel-polyfill
+      npm install --save-dev babel-polyfill
+webpack.base.conf.js中配置
+// 修改前-------------------------
+module.exports = {
+    context: path.resolve(__dirname, '../'),
+    entry: {
+        app: './src/main.js',
+    }
+// 修改后-------------------------
+module.exports = {
+    context: path.resolve(__dirname, '../'),
+    entry: {
+        app: ["babel-polyfill", "./src/main.js"],
+    }
+方法二：
+直接引入：
+<script src="https://cdn.bootcss.com/babel-polyfill/6.23.0/polyfill.min.js"></script>
+
+
+
+25、vue获取当前元素的宽度     this.$refs[name].offsetWidth    this.$refs[name].offsetHeight
+
+26、watch监听props内的对象值变化
+     props:{menuForm:Object}
+    watch:{
+       menuForm:{
+      	handler(val){
+	    if(val.menuFlag=='1'){
+                       this.menuForm.menuType='',
+                       this.menuForm.url=''
+                     }
+	},
+	deep:true
+       }
+     }
+   
+27、vue元素鼠标滚动事件   @DOMMouseScroll="handlescroll"    @mousewheel="handlescroll"     火狐/其他浏览器
+     例： handlescroll (e) {
+          var type = e.type
+         let delta = 0
+      if (type === 'DOMMouseScroll' || type === 'mousewheel') {
+        delta = (e.wheelDelta) ? e.wheelDelta : -(e.detail || 0) * 40
+      }
+     //使每次鼠标滚动距离--120px
+      this.handleScroll(delta)  
+    },
+
+28、iView动态生成Menu时open-names不生效的解决办法
+                this.$nextTick(() => {
+                  this.$refs.side_menu.updateOpened();
+                  this.$refs.side_menu.updateActiveName();
+                });
+
+29、vue 添加快捷路径指向   build/webpack.base.conf.js
+       resolve: {
+         extensions: ['.js', '.vue', '.json'],
+         alias: {
+           'vue$': 'vue/dist/vue.esm.js',
+           '@': resolve('src')   //快捷指向src
+         }
+       },
+
+30、vue打印插件
+      。安装  npm install vue-print-nb --save
+      。import Print from 'vue-print-nb'
+　　   Vue.use(Print); //注册
+      。<div id="printTest" >
+　　　　　<p>锄禾日当午</p>
+　　　</div>
+　　　<button v-print="'#printTest'">打印</button>
+
+31、vue插件封装
+  MyPlugin.install = function (Vue, options) {
+  // 7.1. 添加全局方法或属性
+  Vue.myGlobalMethod = function () {
+    // 逻辑...
+  }
+
+  // 7.2. 添加全局资源
+  Vue.directive('my-directive', {
+    bind (el, binding, vnode, oldVnode) {
+      // 逻辑...
+    }
+    ...
+  })
+
+  // 7.3. 注入组件
+  Vue.mixin({
+    created: function () {
+      // 逻辑...
+    }
+    ...
+  })
+
+  // 7.4. 添加实例方法
+  Vue.prototype.$myMethod = function (methodOptions) {
+    // 逻辑...
+  }
+}
+
+
+
+32、vue跳转上一页 
+    @click="$router.back(-1)"  上一页
+    @click="$router.back(1)"   下一页
+
+
+33、非父子传值
+    模块1
+    this.$Bus.$emit("customMessageShow");
+    this.$Bus.$off("customMessageShow");
+    模块2
+    this.$Bus.$on("customMessageShow",()=>{});
+
+34、vue-cli打包后抽离(不打包)第三方文件步骤
+1、index.html引入文件
+ <script src="./static/js/baowei-2.0.js" async></script>
+2、/build/webpack.base.conf.js 文件中添加 vue 的映射
+module.exports = {
+ externals: {
+    "../static/js/baowei-2.0":"baowei"
+  },
+}
+
+35、为对象添加一属性后，视图层不更新bug解决
+     student: {
+       name: '张三',
+     }
+    a、使用this.$set(obj, key, value)/vue.set(obj, key, value)
+     this.$set(this.student, 'age', 15)
+    b、通过Object.assign(target, sources)方法
+     this.student.age = 15
+     this.student = Object.assign({}, this.student)
+    c、this.$forceUpdate() 强制重新渲染 ---用此方法添加的键值对每次修改后都需要添加此方法重新渲染
+     this.student.age = 15
+     this.$forceUpdate()

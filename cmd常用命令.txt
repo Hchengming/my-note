@@ -1,0 +1,14 @@
+WIN+R键  启动窗口
+
+1、cls     清屏
+2、cd     进入指定目录
+3、dir     显示当前目录下的文件和子目录信息
+4、ipconfig   查找本机ip
+
+
+
+
+
+mysql
+net start mysql 开启MySQL服务;
+net stop mysql 关闭MySql服务

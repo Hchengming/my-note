@@ -1,0 +1,80 @@
+cnpm install --save mongodb
+cnpm install --save mongoose
+
+（一）添加
+//引包
+var mongoose = require('mongoose');
+//连接数据库，数据库叫做/studentmanagement。如果数据库不存在会自动创建。
+mongoose.connect('mongodb://localhost/studentmanagement');
+
+//创建一个schema
+var studentSchema = {
+    "name"     : String,
+    "age"     : Number,
+    "sex"     : String
+};
+
+//创建一个模型（就是一个类）
+var Student = mongoose.model("student" , studentSchema);
+
+//new一个实例
+var xiaoming = new Student({
+    "name"     : "小明",
+    "age"     : 12,
+    "sex"     : "男"
+});
+
+//持久化
+xiaoming.save();
+
+
+（二）查找
+//引包
+var mongoose = require('mongoose');
+//连接数据库，数据库叫做studentmanagement。如果数据库不存在会自动创建。没有大回调。
+mongoose.connect('mongodb://localhost/studentmanagement');
+
+//创建一个schema
+var studentSchema = {
+    "name"     : String,
+    "age"     : Number,
+    "sex"     : String
+};
+
+//创建一个模型
+var Student = mongoose.model("student" , studentSchema);
+
+Student.find({"age" : {$gt : 12}},function(err,docs){
+    console.log(docs);
+});
+
+（三）删除
+
+删除很灵活，可以用类打点调用Student的remove方法：
+
+ 
+
+Student.remove({"name" : "小明"},function(err){
+    
+});
+ 
+
+也可以调用实例的remove方法：
+
+ 
+
+Student.find({"name" : "小红"} , function(err,docs){
+    var xiaohong = docs[0];
+    xiaohong.remove();
+});
+ 
+
+（四）修改
+
+Student.find({"name" : "小强"} , function(err,docs){
+    var xq = docs[0];
+    xq.sex = "女";
+    xq.save();
+});
+
+
