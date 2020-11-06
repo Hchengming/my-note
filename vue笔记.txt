@@ -403,3 +403,7 @@ module.exports = {
     c、this.$forceUpdate() 强制重新渲染 ---用此方法添加的键值对每次修改后都需要添加此方法重新渲染
      this.student.age = 15
      this.$forceUpdate()
+
+36、vue模块样式修改
+    this.$refs.XXX.$el.style 修改style样式    例： let settingFormDoc = this.$refs.settingFormDialog.$el.style.top = '300px'
+    

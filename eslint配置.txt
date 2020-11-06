@@ -1,3 +1,13 @@
+1、eslint初始化
+     01 ./node_modules/.bin/eslint --init
+     02 npm run lint
+
+
+
+
+
+
+
 "no-console": "error", 　　　　　　　　　　　　　　　　 // 禁止console
 "no-alert": "error", 　　　　　　　　　　　　　　　　　 // 禁止alert,conirm等
 "no-debugger": "error", 　　　　　　　　　　　　　　　 // 禁止debugger

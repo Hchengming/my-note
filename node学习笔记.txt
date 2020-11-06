@@ -157,3 +157,72 @@ app.all('*', function(req, res, next) {
              var ID = UUID.v1();
 
 
+15、process 核心模块
+       process.exit() 程序终止
+       process.env.NODE_ENV    环境变量  默认：development(开发环境)   production(生产环境设置)
+       当将一个函数传给 process.nextTick() 时，则指示引擎在当前操作结束（在下一个事件循环滴答开始之前）时调用此函数：
+       process.nextTick(() => {
+            //做些事情
+       })
+
+16、console打印
+       01、console.clear() 会清除控制台
+       02、使用 time() 和 timeEnd() 轻松地计算函数运行所需的时间
+              const doSomething = () => console.log('测试')
+              const measureDoingSomething = () => {
+                  console.time('doSomething()')
+                  //做点事，并测量所需的时间。
+                 doSomething()
+               console.timeEnd('doSomething()')
+              }
+              measureDoingSomething()
+ 
+17、npm list -g 或npm list 查看当前依赖版本     
+
+18、promise使用(处理异步代码)
+   案例：
+const fs = require('fs')
+const getFile = (fileName) => {
+  return new Promise((resolve, reject) => {
+    fs.readFile(fileName, (err, data) => {
+      if (err) {
+        reject (err)  // 调用 `reject` 会导致 promise 失败，无论是否传入错误作为参数，
+        return        // 且不再进行下去。
+      }
+      resolve(data)
+    })
+  })
+}
+getFile('/etc/passwd')
+.then(data => console.log(data))
+.catch(err => console.error(err))
+
+Promise.all
+const f1 = fetch('/something.json')
+const f2 = fetch('/something2.json')
+Promise.all([f1, f2])
+  .then(res => {
+    console.log('结果的数组', res)
+  })
+  .catch(err => {
+    console.error(err)
+  })
+
+19、node获取本地ip
+/**获取本机ip**/
+function getIPAdress() {
+  var interfaces = require('os').networkInterfaces()
+  for (var devName in interfaces) {
+    var iface = interfaces[devName]
+    for (var i = 0; i < iface.length; i++) {
+      var alias = iface[i]
+      if (
+        alias.family === 'IPv4' &&
+        alias.address !== '127.0.0.1' &&
+        !alias.internal
+      ) {
+        return alias.address
+      }
+    }
+  }
+}

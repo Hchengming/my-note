@@ -1,0 +1,176 @@
+1、v-charts  x、y轴样式设置
+ <ve-histogram :data="chartData" width="400px" :extend="extend"></ve-histogram>
+this.extend = {           
+         //x轴文本设置
+        'xAxis.0.axisLabel.rotate': 45,//x轴文本倾斜
+        // 'xAxis.0.axisLine.lineStyle.color': "red",//x轴文本改变颜色
+        'xAxis.0.axisLabel.color': 'red',//x轴文本颜色
+        'xAxis.0.axisLabel.fontSize': 16,//x轴文本字体大小
+        'xAxis.0.axisLabel.fontFamily': 'Arial',//x轴文本字体系列
+        'xAxis.0.axisLabel.fontWeight': 'bold',//x轴文本字体粗细
+        'xAxis.0.axisLabel.align': 'center',//x轴文本字体位置
+
+                //y轴文本设置
+        // 'yAxis.0.axisLine.lineStyle.color': "green",//y轴文本改变颜色
+        'yAxis.0.axisLabel.color': "green",//y轴文本改变颜色
+ }
+
+
+2、柱状图配置
+//html部分  案例
+<ve-histogram
+    class="myve"
+    :data="chartData"
+    :settings="vchartsConfig.setting"
+    :extend="vchartsConfig.extend"
+    ></ve-histogram>
+
+//js部分
+  data() {
+    return {
+　　// v-charts配置参数
+      vchartsConfig: {
+        setting:{
+          // 别称
+          labelMap: {
+            'area': '地区',
+            'count': '拓展数',
+          },
+        },
+        extend: {
+          title:{
+            show:false,
+            text:'实时数据',
+            subtext:'各城市对应的拓展',
+            // textAlign:'center',
+          },
+          // 图标顶部的标题及按钮
+          legend:{
+            show:false,
+          },
+          // backgroundColor:'red',//整个组件的背景颜色
+          //X轴线
+          xAxis: {
+            // name: "地区",
+            type:'category',
+            show:true,
+            // 坐标轴轴线
+            axisLine:{
+              show:false,
+            },
+            // 坐标轴刻度
+            axisTick:{
+              show:false,
+            },
+            // 坐标轴每项的文字
+            axisLabel:{
+              showMaxLabel:true,
+              showMinLabel:true,
+              color:'#3a3a3a',
+              rotate:0, //刻度文字旋转，防止文字过多不显示
+              margin:8,//文字离x轴的距离
+              boundaryGap:true,
+              // backgroundColor:'#0f0',
+              formatter:(v)=>{
+                // console.log('x--v',v)
+                if(v.length>3){
+                  return v.substring(0,3)+'...'
+                }
+                return v
+              },
+            },
+            // X轴下面的刻度小竖线
+            axisTick:{
+              show:false,
+              alignWithLabel:true,//axisLabel.boundaryGap=true时有效
+              interval:0,
+              length:4,//长度
+            },
+            // x轴对应的竖线
+            splitLine: {
+              show: false,
+              interval: 0,
+              lineStyle:{
+                color:'red',
+                backgroundColor:'red',
+              }
+            }
+          },
+          yAxis: {
+            show:true,
+            offset:0,
+            // 坐标轴轴线
+            axisLine:{
+              show:false,
+            },
+            // x轴对应的竖线
+            splitLine: {
+              show: false,
+            },
+            // 坐标轴刻度
+            axisTick:{
+              show:false,
+            },
+            boundaryGap:false,
+            axisLabel:{
+              color:'#3a3a3a',
+            },
+          },
+          
+          // 滚动组件参数
+          dataZoom:[
+            {
+              type: 'inside',
+              show: true,
+              xAxisIndex: [0],
+              startValue: 0,
+              endValue: 4,
+              zoomLock:true,//阻止区域缩放
+            }
+          ],
+
+          // 柱形区域
+          grid: {
+            show: true,
+            backgroundColor: "#FFF6F3",
+            borderColor: "#FFF6F3",
+            // containLabel:false,
+          },
+
+          // 每个柱子
+          series(v) {
+            // console.log("v", v);
+            // 设置柱子的样式
+            v.forEach(i => {
+              console.log("series", i);
+              i.barWidth = 20;
+              i.itemStyle={
+                barBorderRadius:[10,10,10,10],
+                color:'#FF6633',
+                borderWidth:0,
+              };
+              i.label={
+                color:'#666',
+                show:true,
+                position:'top',
+                // backgroundColor:'yellow',
+              };
+
+            });
+            return v;
+          },
+        }
+      },
+      // v-chats列表数据
+      chartData: {
+        columns: ["area", "count"],
+        rows: [
+          { "area": "广州市", "count": 20 },
+          { "area": "战狼3", "count": 30 },
+          { "area": "2222", "count": 12 },
+          { "area": "3333", "count": 42 },
+        ],
+      },
+
+    };
+  },

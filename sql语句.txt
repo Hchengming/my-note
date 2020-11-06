@@ -1,0 +1,38 @@
+SELECT  查询
+SELECT 列名称 FROM 表名称  （按列查询）       例：SELECT LastName,FirstName FROM Persons     
+SELECT * FROM 表名称           （查询全部）      例：SELECT * FROM Persons
+SELECT DISTINCT 列名称 FROM 表名称  （DISTINCT：筛选出唯一值，去重） 例：SELECT DISTINCT Company FROM Orders 
+SELECT 列名称 FROM 表名称 WHERE 列 运算符 值  （按条件查询）例：SELECT * FROM Persons WHERE City='Beijing'
+AND 和 OR 运算符    SELECT * FROM Persons WHERE FirstName='Thomas' AND LastName='Carter'
+                                SELECT * FROM Persons WHERE (FirstName='Thomas' OR FirstName='William')   AND LastName='Carter'
+ORDER BY 结果排序                             例：SELECT Company, OrderNumber FROM Orders ORDER BY Company
+（查询结果排序：DESC:倒序 ASC:顺序）          SELECT Company, OrderNumber FROM Orders ORDER BY Company DESC, OrderNumber ASC   
+SELECT TOP Number * FROM 表名称  (返回一定数量的数据)    例：SELECT TOP 2 * FROM Persons  返回2条数据
+
+LIKE 操作符  （LIKE 操作符用于在 WHERE 子句中搜索列中的指定模式，按字符串查询）
+例：SELECT * FROM Persons WHERE City LIKE 'N%'    从"Persons" 表中选取居住在以 "N" 开始的城市里的人
+      SELECT * FROM Persons WHERE City LIKE '%g'     从 "Persons" 表中选取居住在以 "g" 结尾的城市里的人
+      SELECT * FROM Persons WHERE City LIKE '%lon%'   从 "Persons" 表中选取居住在包含 "lon" 的城市里的人
+
+通配符使用   （%：替代一个或多个字符，_:仅替代一个字符,[charlist]:字符列中的任何单一字符,[^charlist]或[!charlist]：不在字符列中的任何单一字符）
+例： SELECT * FROM Persons  WHERE FirstName LIKE '_eorge'    从"Persons" 表中选取名字的第一个字符之后是 "eorge" 的人
+       SELECT * FROM Persons  WHERE LastName LIKE 'C_r_er'     从 "Persons" 表中选取的这条记录的姓氏以 "C" 开头，然后是一个任意字符，然后是 "r"，然后是任意字符，然后是 "er"：
+       SELECT * FROM Persons   WHERE City LIKE '[ALN]%'      从 "Persons" 表中选取居住的城市以 "A" 或 "L" 或 "N" 开头的人
+       SELECT * FROM Persons  WHERE City LIKE '[!ALN]%'     从 "Persons" 表中选取居住的城市不以 "A" 或 "L" 或 "N" 开头的人
+
+
+
+                                                                              
+INSERT INTO  插入   
+INSERT INTO 表名称 VALUES (值1, 值2,....)                    例：INSERT INTO Persons VALUES ('Gates', 'Bill', 'Xuanwumen 10', 'Beijing')
+INSERT INTO 表名称 (列1, 列2,...) VALUES (值1, 值2,....)  例：INSERT INTO Persons (LastName, Address) VALUES ('Wilson', 'Champs-Elysees')
+
+Update 修改
+UPDATE 表名称 SET 列名称 = 新值 WHERE 列名称 = 某值    例：UPDATE Person SET FirstName = 'Fred' WHERE LastName = 'Wilson' 
+                                                                                               UPDATE Person SET Address = 'Zhongshan 23', City = 'Nanjing'  WHERE LastName = 'Wilson'
+
+DELETE 删除
+DELETE FROM 表名称 WHERE 列名称 = 值    例：DELETE FROM Person WHERE LastName = 'Wilson' 
+DELETE FROM table_name （删除表中所有数据）
+DELETE * FROM table_name  （删除表中所有数据）
+

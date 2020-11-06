@@ -1,7 +1,3 @@
-
-
-
-
 1.回车键点击事件；
   $(document).keydown(function(event){
         if(event.keyCode==13){
@@ -461,7 +457,7 @@ a、函数异步调用
 函数表达式： const foo = async function() {}
 对象的方式： let obj = { async foo() {} }
 箭头函数： const foo = async () => {}
-例：async抛出异常
+例1：async抛出异常
     let sayHi = async sayHi => {
             throw new Error('async抛出异常');
     }
@@ -471,6 +467,94 @@ a、函数异步调用
     .catch(err => {
         console.log(err.message);
     })
+await后面接一个会return new promise的函数并执行它
+await只能放在async函数里
+例2： const doSomethingAsync = () => {
+  return new Promise(resolve => {
+    setTimeout(() => resolve('做些事情'), 3000)
+  })
+}
+const doSomething = async () => {
+  console.log(await doSomethingAsync())
+}
+console.log('之前')
+doSomething()
+console.log('之后')
 
 39、includes()    查找一个值在不在数组里
        ['a', 'b', 'c'].includes('a')     // true
+
+
+40、js阻止事件冒泡、阻止默认行为
+       a、阻止事件冒泡
+     function stopBubble(e) { 
+        //如果提供了事件对象，则这是一个非IE浏览器 
+        if ( e && e.stopPropagation ) 
+            //因此它支持W3C的stopPropagation()方法 
+            e.stopPropagation(); 
+      else 
+        //否则，我们需要使用IE的方式来取消事件冒泡 
+        window.event.cancelBubble = true; 
+      }
+b、阻止浏览器的默认行为 
+function stopDefault( e ) { 
+    //阻止默认浏览器动作(W3C) 
+    if ( e && e.preventDefault ) 
+        e.preventDefault(); 
+    //IE中阻止函数器默认动作的方式 
+    else 
+        window.event.returnValue = false; 
+    return false; 
+}
+
+
+41、项目添加公共配置文件(添加window属性方式)
+01、创建文件config.js,index.html文件引入
+02、config.js文件编码
+      widow.config={
+         dataUrl:'http:127.0.0.1:8080'
+      }
+03、组件调用
+      console.log(window.config.dataUrl)
+
+
+42、get请求拼接
+/**
+ * @function 参数拼接
+ * @param {object} obj 只支持非嵌套的对象
+ * @returns {string}
+ * @author 天心天地生 2020-1-15
+ */
+function params(obj) {
+  let result = '';
+  let item;
+  for (item in obj) {
+    if (obj[item] && String(obj[item])) {
+      result += `&${item}=${obj[item]}`;
+    }
+  }
+  if (result) {
+    result = '?' + result.slice(1);
+  }
+  return result;
+}
+const obj = {
+  name: '天心天地生',
+  age: '24',
+  msg: ''
+}
+const url = `/get/info/${this.params(obj)}`;
+console.log(url); // > /get/info/?name=天心天地生&age=24
+
+
+43、js字符串转函数
+方法一：
+eval()具有可以解析表达式的特性，所以可以利用这一特性将字符串解析为一个函数。
+  let funcStr = "function test(value){alert(value)}";
+  let test = eval("(false || "+funcStr+")");
+  test("函数能够执行");
+方法二：new Function()
+new Function()只接受字符串参数，其可选参数为方法的入参，必填参数为方法体内容。
+let funcStr = "function test(value){alert(value)}";
+let funcTest = new Function('return '+funcStr);
+funcTest()("函数也能够执行")
